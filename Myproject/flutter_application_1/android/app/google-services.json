@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "851094340341",
+    "project_id": "examenapp-5e5b8",
+    "storage_bucket": "examenapp-5e5b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851094340341:android:59ebb309e2760d7a5c7bbc",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851094340341-itp478fbb964h77mkcuqtg49s1r4tdfp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_application_1",
+            "certificate_hash": "ceac232c30df21428332d4eb61348880b3ddf8c7"
+          }
+        },
+        {
+          "client_id": "851094340341-okt71ap868d9pu5f0bmvbq52h1ihbsjp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuk6Ykd6_vxs_ZqWUkdsxA65xotYwmhIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851094340341-okt71ap868d9pu5f0bmvbq52h1ihbsjp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
