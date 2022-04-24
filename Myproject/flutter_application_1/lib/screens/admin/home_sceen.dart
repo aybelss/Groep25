@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/admin/exam_screen/exam_screen.dart';
+import 'package:flutter_application_1/screens/admin/password_change.dart';
 
 import 'login_screen.dart';
 
@@ -81,14 +82,19 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PassChange()),
+                  );
+                },
                 splashColor: Colors.black,
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: const <Widget>[
-                      Icon(Icons.add_to_drive, size: 70.0, color: Colors.white),
-                      Text("Firebase Backup",
+                      Icon(Icons.password, size: 70.0, color: Colors.white),
+                      Text("Wachtwoord wijzigen",
                           style: TextStyle(fontSize: 30.0, color: Colors.white))
                     ],
                   ),
