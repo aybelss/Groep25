@@ -5,6 +5,7 @@ class AddStudent extends StatefulWidget {
   const AddStudent({Key? key}) : super(key: key);
 
   final String title = " ";
+  final String score = " ";
 
   @override
   State<AddStudent> createState() => _AddStudentState();
@@ -13,6 +14,7 @@ class AddStudent extends StatefulWidget {
 class _AddStudentState extends State<AddStudent> {
   List student = List.empty();
   String title = "";
+  String score = "";
   @override
   void initState() {
     super.initState();
@@ -25,6 +27,7 @@ class _AddStudentState extends State<AddStudent> {
 
     Map<String, String> StudentList = {
       "studentTitle": title,
+      "score": score,
     };
 
     documentReference
@@ -99,7 +102,7 @@ class _AddStudentState extends State<AddStudent> {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
-                  title: const Text("Add Student"),
+                  title: const Text("Voeg student toe"),
                   content: Container(
                     width: 400,
                     height: 100,
@@ -108,6 +111,7 @@ class _AddStudentState extends State<AddStudent> {
                         TextField(
                           onChanged: (String value) {
                             title = value;
+                            score = "0";
                           },
                         ),
                       ],
@@ -121,7 +125,7 @@ class _AddStudentState extends State<AddStudent> {
                           });
                           Navigator.of(context).pop();
                         },
-                        child: const Text("Add"))
+                        child: const Text("Voeg toe"))
                   ],
                 );
               });
