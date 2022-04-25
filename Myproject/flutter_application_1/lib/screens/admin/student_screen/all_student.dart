@@ -21,10 +21,11 @@ class _AddStudentState extends State<AddStudent> {
     student = ["Hello", "Hey There"];
   }
 
-  createStudent() {
+  createStudent(String title) {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("students").doc(title);
 
+    // ignore: non_constant_identifier_names
     Map<String, String> StudentList = {
       "studentTitle": title,
       "score": score,
@@ -32,6 +33,7 @@ class _AddStudentState extends State<AddStudent> {
 
     documentReference
         .set(StudentList)
+        // ignore: avoid_print
         .whenComplete(() => print("Student succesvol gemaakt"));
   }
 
@@ -41,6 +43,7 @@ class _AddStudentState extends State<AddStudent> {
 
     documentReference
         .delete()
+        // ignore: avoid_print
         .whenComplete(() => print("Student succesvol verwijdert"));
   }
 
@@ -54,7 +57,7 @@ class _AddStudentState extends State<AddStudent> {
         stream: FirebaseFirestore.instance.collection("students").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('Er is iets mis gegaan');
+            return const Text('Er is iets mis gegaan');
           } else if (snapshot.hasData || snapshot.data != null) {
             return ListView.builder(
                 shrinkWrap: true,
@@ -103,16 +106,23 @@ class _AddStudentState extends State<AddStudent> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   title: const Text("Voeg student toe"),
-                  content: Container(
+                  content: SizedBox(
                     width: 400,
                     height: 100,
                     child: Column(
                       children: [
                         TextField(
+                          decoration: const InputDecoration(
+                            hintText: "CSV",
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(vertical: 40),
+                          ),
                           onChanged: (String value) {
                             title = value;
                             score = "0";
                           },
+                          maxLines: 7,
+                          minLines: 1,
                         ),
                       ],
                     ),
@@ -120,10 +130,21 @@ class _AddStudentState extends State<AddStudent> {
                   actions: <Widget>[
                     TextButton(
                         onPressed: () {
-                          setState(() {
-                            createStudent();
-                          });
-                          Navigator.of(context).pop();
+                          // ignore: non_constant_identifier_names
+                          List<String> StudentIds = title.split(';');
+                          // ignore: unnecessary_null_comparison
+                          if (title.split(';') == null) {
+                            StudentIds = [title];
+                          }
+                          if (title != '') {
+                            Navigator.of(context).pop();
+                            for (int i = 0; i < title.length; i++) {
+                              createStudent(StudentIds[i]);
+                            }
+                          } else {
+                            // ignore: avoid_print
+                            print('No student IDs entered');
+                          }
                         },
                         child: const Text("Voeg toe"))
                   ],

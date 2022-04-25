@@ -20,7 +20,7 @@ class _StudentStartState extends State<StudentStart> {
         stream: FirebaseFirestore.instance.collection("students").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('Er is iets mis gegaan');
+            return const Text('Er is iets mis gegaan');
           } else if (snapshot.hasData || snapshot.data != null) {
             return ListView.builder(
                 shrinkWrap: true,
