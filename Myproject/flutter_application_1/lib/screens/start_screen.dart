@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/student/student_start_screen.dart';
 
 import 'admin/home/login_screen.dart';
 
@@ -58,7 +59,13 @@ class _StartScreenState extends State<StartScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const StudentStart()),
+                            );
+                          },
                           splashColor: Colors.black,
                           child: Center(
                             child: Column(

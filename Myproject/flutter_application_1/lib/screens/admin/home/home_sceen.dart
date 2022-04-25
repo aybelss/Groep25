@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/admin/exam_screen/exam_screen.dart';
 import 'package:flutter_application_1/screens/admin/home/password_change.dart';
+import 'package:flutter_application_1/screens/admin/student_screen/all_student.dart';
 
 import 'login_screen.dart';
 
@@ -59,7 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AddStudent()),
+                  );
+                },
                 splashColor: Colors.black,
                 child: Center(
                   child: Column(
