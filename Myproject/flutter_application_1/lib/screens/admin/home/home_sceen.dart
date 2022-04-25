@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/admin/exam_screen/exam_screen.dart';
-import 'package:flutter_application_1/screens/admin/password_change.dart';
+import 'package:flutter_application_1/screens/admin/home/password_change.dart';
 
 import 'login_screen.dart';
 
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 70.0,
                         color: Colors.white,
                       ),
-                      Text("Docent",
+                      Text("Examen",
                           style: TextStyle(fontSize: 30.0, color: Colors.white))
                     ],
                   ),
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: const <Widget>[
                       Icon(Icons.person_add_alt_1,
                           size: 70.0, color: Colors.white),
-                      Text("Studenten",
+                      Text("Student",
                           style: TextStyle(fontSize: 30.0, color: Colors.white))
                     ],
                   ),
