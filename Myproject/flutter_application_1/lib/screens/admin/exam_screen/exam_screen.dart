@@ -12,11 +12,8 @@ class _ExamScreenState extends State<ExamScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
-        ),
+        iconTheme: const IconThemeData(),
         title: const Text("Exam Screen"),
-        centerTitle: true,
       ),
       backgroundColor: Colors.white,
     );

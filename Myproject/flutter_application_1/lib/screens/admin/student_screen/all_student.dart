@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/admin/student_screen/student_details.dart';
 
 class AddStudent extends StatefulWidget {
   const AddStudent({Key? key}) : super(key: key);
 
   final String title = " ";
-  final String score = " ";
+  final int score = 0;
 
   @override
   State<AddStudent> createState() => _AddStudentState();
@@ -14,7 +15,8 @@ class AddStudent extends StatefulWidget {
 class _AddStudentState extends State<AddStudent> {
   List student = List.empty();
   String title = "";
-  String score = "";
+  int score = 0;
+
   @override
   void initState() {
     super.initState();
@@ -25,11 +27,7 @@ class _AddStudentState extends State<AddStudent> {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("students").doc(title);
 
-    // ignore: non_constant_identifier_names
-    Map<String, String> StudentList = {
-      "studentTitle": title,
-      "score": score,
-    };
+    Map<String, dynamic> StudentList = {"studentTitle": title, 'score': score};
 
     documentReference
         .set(StudentList)
@@ -47,11 +45,21 @@ class _AddStudentState extends State<AddStudent> {
         .whenComplete(() => print("Student succesvol verwijdert"));
   }
 
+  navigateToDetail(BuildContext context, DocumentSnapshot post) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StudentDetails(
+            post: post,
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text("Studenten"),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("students").snapshots(),
@@ -63,29 +71,29 @@ class _AddStudentState extends State<AddStudent> {
                 shrinkWrap: true,
                 itemCount: snapshot.data?.docs.length,
                 itemBuilder: (BuildContext context, int index) {
-                  QueryDocumentSnapshot<Object?>? documentSnapshot =
-                      snapshot.data?.docs[index];
-                  return Dismissible(
-                      key: Key(index.toString()),
-                      child: Card(
-                        elevation: 4,
-                        child: ListTile(
-                          title: Text((documentSnapshot != null)
-                              ? (documentSnapshot["studentTitle"])
-                              : ""),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            color: Colors.red,
-                            onPressed: () {
-                              setState(() {
-                                deleteStudent((documentSnapshot != null)
-                                    ? (documentSnapshot["studentTitle"])
-                                    : "");
-                              });
-                            },
+                  DocumentSnapshot<Object?>? doc = snapshot.data?.docs[index];
+                  return ListView(
+                      shrinkWrap: true,
+                      children: snapshot.data!.docs.map((documentSnapshot) {
+                        return Card(
+                          elevation: 4,
+                          child: ListTile(
+                            title: Text(documentSnapshot["studentTitle"]),
+                            onTap: () =>
+                                navigateToDetail(context, documentSnapshot),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              color: Colors.red,
+                              onPressed: () {
+                                setState(() {
+                                  deleteStudent(
+                                      documentSnapshot["studentTitle"]);
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                      ));
+                        );
+                      }).toList());
                 });
           }
           return const Center(
@@ -119,7 +127,7 @@ class _AddStudentState extends State<AddStudent> {
                           ),
                           onChanged: (String value) {
                             title = value;
-                            score = "0";
+                            score = 0;
                           },
                           maxLines: 7,
                           minLines: 1,

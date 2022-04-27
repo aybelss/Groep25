@@ -48,14 +48,9 @@ class _PassChangeState extends State<PassChange> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
-        ),
-        title: const Text("Wijzig Wachtwoord",
-            style: TextStyle(
-              color: Colors.white,
-            )),
-        centerTitle: true,
+        iconTheme: const IconThemeData(//change your color here
+            ),
+        title: const Text("Wijzig Wachtwoord", style: TextStyle()),
       ),
       backgroundColor: Colors.white,
       body: Form(
