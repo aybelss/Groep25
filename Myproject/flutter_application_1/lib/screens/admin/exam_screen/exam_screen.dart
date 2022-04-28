@@ -20,11 +20,27 @@ class _ExamScreenState extends State<ExamScreen> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+            Container(
+              height: 500,
+              width: 1100,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 2,
+                ),
+              ),
+              child: ListView(),
+            ),
+            SizedBox(
+              height: 40,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Card(
                   color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
                     onTap: () {},
                     splashColor: Colors.black,
@@ -48,6 +64,8 @@ class _ExamScreenState extends State<ExamScreen> {
                 Padding(padding: EdgeInsets.all(50)),
                 Card(
                   color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
                     onTap: () {},
                     splashColor: Colors.black,
@@ -71,6 +89,8 @@ class _ExamScreenState extends State<ExamScreen> {
                 Padding(padding: EdgeInsets.all(50)),
                 Card(
                   color: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
                     onTap: () {},
                     splashColor: Colors.black,
