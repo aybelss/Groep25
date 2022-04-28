@@ -141,7 +141,7 @@ class _AddStudentState extends State<AddStudent> {
                           // ignore: non_constant_identifier_names
                           List<String> StudentIds = title.split(';');
                           // ignore: unnecessary_null_comparison
-                          if (title.split(';') == null) {
+                          if (title.split(',') == null) {
                             StudentIds = [title];
                           }
                           if (title != '') {
