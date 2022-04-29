@@ -60,7 +60,7 @@ class _PassChangeState extends State<PassChange> {
           child: ListView(
             children: [
               SizedBox(
-                height: 100,
+                height: 60,
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 18.0),

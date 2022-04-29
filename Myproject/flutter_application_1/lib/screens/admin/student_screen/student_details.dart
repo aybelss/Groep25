@@ -16,7 +16,6 @@ class _StudentDetailsState extends State<StudentDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Student Details"),
-        centerTitle: true,
       ),
       body: Center(
           child: Column(

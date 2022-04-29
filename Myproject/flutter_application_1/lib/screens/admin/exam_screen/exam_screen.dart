@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/admin/exam_screen/questions/code_correction.dart';
+import 'package:flutter_application_1/screens/admin/exam_screen/questions/multiple_choice.dart';
+import 'package:flutter_application_1/screens/admin/exam_screen/questions/open_question.dart';
 
 class ExamScreen extends StatefulWidget {
   const ExamScreen({Key? key}) : super(key: key);
@@ -42,7 +45,12 @@ class _ExamScreenState extends State<ExamScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MultipleChoice()));
+                    },
                     splashColor: Colors.black,
                     child: Center(
                       child: Column(
@@ -67,7 +75,12 @@ class _ExamScreenState extends State<ExamScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const OpenQuestion()));
+                    },
                     splashColor: Colors.black,
                     child: Center(
                       child: Column(
@@ -92,7 +105,12 @@ class _ExamScreenState extends State<ExamScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CodeCorrection()));
+                    },
                     splashColor: Colors.black,
                     child: Center(
                       child: Column(
