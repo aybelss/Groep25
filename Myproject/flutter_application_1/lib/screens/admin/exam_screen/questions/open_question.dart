@@ -59,7 +59,12 @@ class _OpenQuestionState extends State<OpenQuestion> {
                 onChanged: (val) {
                   question = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een vraag in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 6,
@@ -69,7 +74,12 @@ class _OpenQuestionState extends State<OpenQuestion> {
                 onChanged: (val) {
                   answer = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een antwoord in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 295,

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CodeCorrection extends StatefulWidget {
-  const CodeCorrection({Key? key}) : super(key: key);
+  const CodeCorrection({Key? key, document}) : super(key: key);
 
   @override
   State<CodeCorrection> createState() => _CodeCorrectionState();
@@ -58,7 +58,12 @@ class _CodeCorrectionState extends State<CodeCorrection> {
                 onChanged: (val) {
                   question = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een vraag in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 295,

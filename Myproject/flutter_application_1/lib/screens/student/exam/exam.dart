@@ -1,20 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/student/exam_start.dart';
 
-class StudentStart extends StatefulWidget {
-  const StudentStart({Key? key}) : super(key: key);
-  final title = " ";
+import '../student_start_screen.dart';
+import 'exam_window.dart';
+
+class Exam extends StatefulWidget {
+  final DocumentSnapshot post;
+  Exam({required this.post});
+
   @override
-  State<StudentStart> createState() => _StudentStartState();
+  State<Exam> createState() => _ExamState();
 }
 
-class _StudentStartState extends State<StudentStart> {
+class _ExamState extends State<Exam> {
   navigateToDetail(BuildContext context, DocumentSnapshot post) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ExamStart(
+          builder: (context) => ExamWindow(
             post: post,
           ),
         ));
@@ -24,10 +27,11 @@ class _StudentStartState extends State<StudentStart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Studenten"),
+        title: Text(widget.post['studentTitle']),
+        automaticallyImplyLeading: false,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("students").snapshots(),
+        stream: FirebaseFirestore.instance.collection("exams").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('Er is iets mis gegaan');
@@ -38,12 +42,13 @@ class _StudentStartState extends State<StudentStart> {
                   return Card(
                     elevation: 4,
                     child: ListTile(
-                      title: Text(documentSnapshot["studentTitle"]),
+                      title: Text(documentSnapshot["question"]),
                       onTap: () => navigateToDetail(context, documentSnapshot),
                     ),
                   );
                 }).toList());
           }
+
           return const Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(
@@ -52,6 +57,17 @@ class _StudentStartState extends State<StudentStart> {
             ),
           );
         },
+      ),
+      //button that finishes the exam
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StudentStart(),
+              ));
+        },
+        child: Text('Finish'),
       ),
     );
   }

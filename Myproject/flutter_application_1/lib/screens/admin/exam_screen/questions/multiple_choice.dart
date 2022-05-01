@@ -60,11 +60,18 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 height: 20,
               ),
               TextFormField(
+                autofocus: false,
+                obscureText: true,
                 decoration: const InputDecoration(hintText: "Vraag"),
                 onChanged: (val) {
                   question = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een vraag in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 6,
@@ -74,7 +81,12 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 onChanged: (val) {
                   option1 = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een optie in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 6,
@@ -84,7 +96,12 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 onChanged: (val) {
                   option2 = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een optie in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 6,
@@ -94,7 +111,12 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 onChanged: (val) {
                   option3 = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een vraag in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 6,
@@ -104,7 +126,12 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 onChanged: (val) {
                   correctAnswer = val;
                 },
-                validator: (val) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Voer een juiste antwoord in';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 150,

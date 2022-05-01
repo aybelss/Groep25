@@ -67,34 +67,26 @@ class _AddStudentState extends State<AddStudent> {
           if (snapshot.hasError) {
             return const Text('Er is iets mis gegaan');
           } else if (snapshot.hasData || snapshot.data != null) {
-            return ListView.builder(
+            return ListView(
                 shrinkWrap: true,
-                itemCount: snapshot.data?.docs.length,
-                itemBuilder: (BuildContext context, int index) {
-                  DocumentSnapshot<Object?>? doc = snapshot.data?.docs[index];
-                  return ListView(
-                      shrinkWrap: true,
-                      children: snapshot.data!.docs.map((documentSnapshot) {
-                        return Card(
-                          elevation: 4,
-                          child: ListTile(
-                            title: Text(documentSnapshot["studentTitle"]),
-                            onTap: () =>
-                                navigateToDetail(context, documentSnapshot),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              color: Colors.red,
-                              onPressed: () {
-                                setState(() {
-                                  deleteStudent(
-                                      documentSnapshot["studentTitle"]);
-                                });
-                              },
-                            ),
-                          ),
-                        );
-                      }).toList());
-                });
+                children: snapshot.data!.docs.map((documentSnapshot) {
+                  return Card(
+                    elevation: 4,
+                    child: ListTile(
+                      title: Text(documentSnapshot["studentTitle"]),
+                      onTap: () => navigateToDetail(context, documentSnapshot),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        color: Colors.red,
+                        onPressed: () {
+                          setState(() {
+                            deleteStudent(documentSnapshot["studentTitle"]);
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                }).toList());
           }
           return const Center(
             child: CircularProgressIndicator(

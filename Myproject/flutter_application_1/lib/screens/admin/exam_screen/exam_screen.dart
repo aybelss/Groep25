@@ -12,12 +12,31 @@ class ExamScreen extends StatefulWidget {
 }
 
 class _ExamScreenState extends State<ExamScreen> {
-  List<Widget> makeListWidget(AsyncSnapshot snapshot) {
-    return snapshot.data.docs.map<Widget>((document) {
+  List<Widget> makeListWidget(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+    return snapshot.data!.docs.map<Widget>((document) {
       return ListTile(
         title: Text(document["question"]),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete),
+          color: Colors.red,
+          onPressed: () {
+            setState(() {
+              deleteQuestion(document["question"]);
+            });
+          },
+        ),
       );
     }).toList();
+  }
+
+  deleteQuestion(item) {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("exams").doc(item);
+
+    documentReference
+        .delete()
+        // ignore: avoid_print
+        .whenComplete(() => print("Vraag succesvol verwijdert"));
   }
 
   @override
@@ -41,7 +60,7 @@ class _ExamScreenState extends State<ExamScreen> {
                   width: 2,
                 ),
               ),
-              child: StreamBuilder(
+              child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection(
                       "exams",
