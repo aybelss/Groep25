@@ -13,13 +13,13 @@ class Exam extends StatefulWidget {
 }
 
 class _ExamState extends State<Exam> {
-  navigateToDetail(BuildContext context, DocumentSnapshot post) {
+  navigateToDetail(BuildContext context, DocumentSnapshot studentpost,
+      DocumentSnapshot exampost) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ExamWindow(
-            post: post,
-          ),
+          builder: (context) =>
+              ExamWindow(postStudent: studentpost, postExam: exampost),
         ));
   }
 
@@ -43,7 +43,8 @@ class _ExamState extends State<Exam> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(documentSnapshot["question"]),
-                      onTap: () => navigateToDetail(context, documentSnapshot),
+                      onTap: () => navigateToDetail(
+                          context, widget.post, documentSnapshot),
                     ),
                   );
                 }).toList());

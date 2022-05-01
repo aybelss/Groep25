@@ -131,7 +131,7 @@ class _AddStudentState extends State<AddStudent> {
                     TextButton(
                         onPressed: () {
                           // ignore: non_constant_identifier_names
-                          List<String> StudentIds = title.split(';');
+                          List<String> StudentIds = title.split(',');
                           // ignore: unnecessary_null_comparison
                           if (title.split(',') == null) {
                             StudentIds = [title];

@@ -20,6 +20,7 @@ class _CodeCorrectionState extends State<CodeCorrection> {
     Map<String, String> codeCorrectionList = {
       "question": question,
       "input": input,
+      "type": "codecorrection"
     };
 
     documentReference

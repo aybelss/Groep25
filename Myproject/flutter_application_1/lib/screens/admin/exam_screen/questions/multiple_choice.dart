@@ -26,6 +26,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       "option2": option2,
       "option3": option3,
       "correctAnswer": correctAnswer,
+      "type": "multiplechoice"
     };
 
     documentReference
@@ -60,8 +61,6 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 height: 20,
               ),
               TextFormField(
-                autofocus: false,
-                obscureText: true,
                 decoration: const InputDecoration(hintText: "Vraag"),
                 onChanged: (val) {
                   question = val;

@@ -21,6 +21,7 @@ class _OpenQuestionState extends State<OpenQuestion> {
       "question": question,
       "answer": answer,
       "input": "",
+      "type": "openquestion"
     };
 
     documentReference
