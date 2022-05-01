@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class MultipleChoice extends StatefulWidget {
@@ -19,7 +18,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
 
   createMultipleChoice(String question) {
     DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("multipleChoice").doc(question);
+        FirebaseFirestore.instance.collection("exams").doc(question);
 
     Map<String, String> multipleChoiceList = {
       "question": question,
@@ -37,7 +36,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
 
   deleteMultipleChoice(item) {
     DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("multipleChoice").doc(item);
+        FirebaseFirestore.instance.collection("exams").doc(item);
 
     documentReference
         .delete()
@@ -54,60 +53,60 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       ),
       body: Form(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: "Vraag"),
+                decoration: const InputDecoration(hintText: "Vraag"),
                 onChanged: (val) {
                   question = val;
                 },
                 validator: (val) {},
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: "Optie een"),
+                decoration: const InputDecoration(hintText: "Optie een"),
                 onChanged: (val) {
                   option1 = val;
                 },
                 validator: (val) {},
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: "Optie twee"),
+                decoration: const InputDecoration(hintText: "Optie twee"),
                 onChanged: (val) {
                   option2 = val;
                 },
                 validator: (val) {},
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: "Optie drie"),
+                decoration: const InputDecoration(hintText: "Optie drie"),
                 onChanged: (val) {
                   option3 = val;
                 },
                 validator: (val) {},
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: "Juiste Antwoord"),
+                decoration: const InputDecoration(hintText: "Juiste Antwoord"),
                 onChanged: (val) {
                   correctAnswer = val;
                 },
                 validator: (val) {},
               ),
-              SizedBox(
+              const SizedBox(
                 height: 150,
               ),
               SizedBox(

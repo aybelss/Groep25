@@ -15,7 +15,7 @@ class _StudentDetailsState extends State<StudentDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Student Details"),
+        title: const Text("Student Details"),
       ),
       body: Center(
           child: Column(
@@ -26,7 +26,7 @@ class _StudentDetailsState extends State<StudentDetails> {
               children: [
                 Text(
                   widget.post['studentTitle'] + ': ',
-                  style: TextStyle(fontSize: 40),
+                  style: const TextStyle(fontSize: 40),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.05,
@@ -34,25 +34,25 @@ class _StudentDetailsState extends State<StudentDetails> {
                   child: TextField(
                     keyboardType: TextInputType.multiline,
                     maxLines: 24,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                     ),
                     onChanged: (String value) {
                       input = value;
                     },
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       labelText: widget.post['score'].toString(),
                       labelStyle: widget.post['score'] < 10
-                          ? TextStyle(color: Colors.red)
-                          : TextStyle(color: Colors.green),
+                          ? const TextStyle(color: Colors.red)
+                          : const TextStyle(color: Colors.green),
                     ),
                   ),
                 ),
-                Text(' /20', style: TextStyle(fontSize: 40)),
+                const Text(' /20', style: TextStyle(fontSize: 40)),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             Row(
@@ -90,7 +90,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.all(50)),
+                const Padding(padding: EdgeInsets.all(50)),
                 Card(
                   color: Colors.grey,
                   child: InkWell(
@@ -113,7 +113,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.all(50)),
+                const Padding(padding: EdgeInsets.all(50)),
                 Card(
                   color: Colors.grey,
                   child: InkWell(
@@ -136,7 +136,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.all(50)),
+                const Padding(padding: EdgeInsets.all(50)),
                 Card(
                   color: Colors.grey,
                   child: InkWell(

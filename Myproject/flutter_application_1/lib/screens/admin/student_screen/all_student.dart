@@ -27,10 +27,10 @@ class _AddStudentState extends State<AddStudent> {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("students").doc(title);
 
-    Map<String, dynamic> StudentList = {"studentTitle": title, 'score': score};
+    Map<String, dynamic> studentList = {"studentTitle": title, 'score': score};
 
     documentReference
-        .set(StudentList)
+        .set(studentList)
         // ignore: avoid_print
         .whenComplete(() => print("Student succesvol gemaakt"));
   }

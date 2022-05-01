@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/admin/exam_screen/questions/code_correction.dart';
 import 'package:flutter_application_1/screens/admin/exam_screen/questions/multiple_choice.dart';
@@ -11,6 +12,14 @@ class ExamScreen extends StatefulWidget {
 }
 
 class _ExamScreenState extends State<ExamScreen> {
+  List<Widget> makeListWidget(AsyncSnapshot snapshot) {
+    return snapshot.data.docs.map<Widget>((document) {
+      return ListTile(
+        title: Text(document["question"]),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +41,20 @@ class _ExamScreenState extends State<ExamScreen> {
                   width: 2,
                 ),
               ),
-              child: ListView(),
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection(
+                      "exams",
+                    )
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return ListView(
+                    children: makeListWidget(snapshot),
+                  );
+                },
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Row(
@@ -69,7 +89,7 @@ class _ExamScreenState extends State<ExamScreen> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.all(50)),
+                const Padding(padding: EdgeInsets.all(50)),
                 Card(
                   color: Colors.grey,
                   shape: RoundedRectangleBorder(
@@ -99,7 +119,7 @@ class _ExamScreenState extends State<ExamScreen> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.all(50)),
+                const Padding(padding: EdgeInsets.all(50)),
                 Card(
                   color: Colors.grey,
                   shape: RoundedRectangleBorder(

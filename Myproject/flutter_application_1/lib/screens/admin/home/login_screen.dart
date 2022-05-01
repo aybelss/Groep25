@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!regex.hasMatch(value)) {
           return ("Voer een geldig wachtwoord in(Min. 6 karakters)");
         }
+        return null;
       },
       onSaved: (value) {
         passwordController.text = value!;
