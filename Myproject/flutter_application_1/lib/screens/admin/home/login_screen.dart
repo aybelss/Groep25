@@ -97,13 +97,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
+            //change your color here
+            ),
+        title: const Text(
+          "Login Scherm",
         ),
-        title: const Text("Login Screen",
-            style: TextStyle(
-              color: Colors.white,
-            )),
-        centerTitle: true,
       ),
       backgroundColor: Colors.white,
       body: Center(

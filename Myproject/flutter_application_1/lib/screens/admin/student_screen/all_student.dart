@@ -23,6 +23,23 @@ class _AddStudentState extends State<AddStudent> {
     student = ["Hello", "Hey There"];
   }
 
+  createStudentAdmin(String title) {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("adminStudent").doc(title);
+
+    Map<String, dynamic> studentList = {
+      "studentId": title,
+      'score': score,
+      'studentAnswers': "",
+      "location": ""
+    };
+
+    documentReference
+        .set(studentList)
+        // ignore: avoid_print
+        .whenComplete(() => print("Student succesvol gemaakt"));
+  }
+
   createStudent(String title) {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("students").doc(title);
@@ -37,8 +54,14 @@ class _AddStudentState extends State<AddStudent> {
 
   deleteStudent(item) {
     DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("students").doc(item);
+        FirebaseFirestore.instance.collection("adminStudent").doc(item);
 
+    documentReference
+        .delete()
+        // ignore: avoid_print
+        .whenComplete(() => print("Student succesvol verwijdert"));
+    documentReference =
+        FirebaseFirestore.instance.collection("students").doc(item);
     documentReference
         .delete()
         // ignore: avoid_print
@@ -62,7 +85,8 @@ class _AddStudentState extends State<AddStudent> {
         title: const Text("Studenten"),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("students").snapshots(),
+        stream:
+            FirebaseFirestore.instance.collection("adminStudent").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Text('Er is iets mis gegaan');
@@ -73,14 +97,14 @@ class _AddStudentState extends State<AddStudent> {
                   return Card(
                     elevation: 4,
                     child: ListTile(
-                      title: Text(documentSnapshot["studentTitle"]),
+                      title: Text(documentSnapshot["studentId"]),
                       onTap: () => navigateToDetail(context, documentSnapshot),
                       trailing: IconButton(
                         icon: const Icon(Icons.delete),
                         color: Colors.red,
                         onPressed: () {
                           setState(() {
-                            deleteStudent(documentSnapshot["studentTitle"]);
+                            deleteStudent(documentSnapshot["studentId"]);
                           });
                         },
                       ),
@@ -139,6 +163,7 @@ class _AddStudentState extends State<AddStudent> {
                           if (title != '') {
                             Navigator.of(context).pop();
                             for (int i = 0; i < title.length; i++) {
+                              createStudentAdmin(StudentIds[i]);
                               createStudent(StudentIds[i]);
                             }
                           } else {

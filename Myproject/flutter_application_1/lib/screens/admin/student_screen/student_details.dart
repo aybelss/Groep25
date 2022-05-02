@@ -11,6 +11,7 @@ class StudentDetails extends StatefulWidget {
 
 class _StudentDetailsState extends State<StudentDetails> {
   String input = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +26,7 @@ class _StudentDetailsState extends State<StudentDetails> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget.post['studentTitle'] + ': ',
+                  widget.post['studentId'] + ': ',
                   style: const TextStyle(fontSize: 40),
                 ),
                 SizedBox(
@@ -104,7 +105,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                             Icons.map,
                             size: 40.0,
                           ),
-                          Text("          GPS           ",
+                          Text("      Location       ",
                               style: TextStyle(
                                 fontSize: 30.0,
                               ))
@@ -127,33 +128,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                             Icons.message,
                             size: 40.0,
                           ),
-                          Text("    Antwoorden     ",
-                              style: TextStyle(
-                                fontSize: 30.0,
-                              ))
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.all(50)),
-                Card(
-                  color: Colors.grey,
-                  child: InkWell(
-                    onTap: () {
-                      widget.post.reference.delete();
-                      Navigator.pop(context);
-                    },
-                    splashColor: Colors.black,
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const <Widget>[
-                          Icon(
-                            Icons.delete,
-                            size: 40.0,
-                          ),
-                          Text("     Verwijder      ",
+                          Text("    Antwoorden    ",
                               style: TextStyle(
                                 fontSize: 30.0,
                               ))

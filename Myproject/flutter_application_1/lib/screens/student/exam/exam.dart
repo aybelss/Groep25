@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../student_start_screen.dart';
+import 'package:flutter_application_1/screens/start_screen.dart';
 import 'exam_window.dart';
 
 class Exam extends StatefulWidget {
@@ -65,7 +64,7 @@ class _ExamState extends State<Exam> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => StudentStart(),
+                builder: (context) => StartScreen(),
               ));
         },
         child: Text('Finish'),
