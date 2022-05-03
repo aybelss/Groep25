@@ -19,7 +19,6 @@ class _OpenQuestionState extends State<OpenQuestion> {
 
     Map<String, String> openQuestionList = {
       "question": question,
-      "answer": answer,
       "input": "",
       "type": "openquestion"
     };
