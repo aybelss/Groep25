@@ -64,10 +64,10 @@ class _ExamState extends State<Exam> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => StartScreen(),
+                builder: (context) => const StartScreen(),
               ));
         },
-        child: Text('Finish'),
+        child: const Text('Finish'),
       ),
     );
   }

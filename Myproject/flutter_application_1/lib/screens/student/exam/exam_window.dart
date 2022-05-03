@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -21,19 +23,18 @@ CodeCorrection() {
 
 class _ExamWindowState extends State<ExamWindow> {
   String answer = "";
-  createOpenQuestion(String question) {
-    DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("exams").doc(question);
+  Future<void> createOpenQuestion(
+      String studentId, String question, String answer) async {
+    CollectionReference students =
+        FirebaseFirestore.instance.collection('adminStudent');
 
-    Map<String, String> openQuestionList = {
-      "question": question,
-      "input": answer,
-      "type": "openquestion",
-    };
-    documentReference
-        .set(openQuestionList)
-        // ignore: avoid_print
-        .whenComplete(() => print("Vraag succesvol gemaakt"));
+    return await students.doc(studentId).set({
+      'answers': {
+        question: {
+          'answer': answer,
+        }
+      }
+    }, SetOptions(merge: true));
   }
 
   @override
@@ -44,34 +45,143 @@ class _ExamWindowState extends State<ExamWindow> {
         ),
         body: Center(
           child: widget.postExam['type'] == 'multiplechoice'
-              ? Text('multipleChoice')
+              ? Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'MeerKeuze Vraag',
+                          style: TextStyle(
+                              fontSize: 50, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 80),
+                        Text(
+                          widget.postExam['question'],
+                          style: const TextStyle(fontSize: 30),
+                        ),
+                        const SizedBox(height: 50),
+                        //options with radio buttons
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Radio<String>(
+                              value: widget.postExam['option1'] as String,
+                              groupValue: answer,
+                              onChanged: (value) {
+                                setState(() {
+                                  answer = value!;
+                                });
+                              },
+                            ),
+                            Text(
+                              widget.postExam['option1'],
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Radio<String>(
+                              value: widget.postExam['option2'] as String,
+                              groupValue: answer,
+                              onChanged: (value) {
+                                setState(() {
+                                  answer = value!;
+                                });
+                              },
+                            ),
+                            Text(
+                              widget.postExam['option2'],
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Radio<String>(
+                              value: widget.postExam['option3'] as String,
+                              groupValue: answer,
+                              onChanged: (value) {
+                                setState(() {
+                                  answer = value!;
+                                });
+                              },
+                            ),
+                            Text(
+                              widget.postExam['option3'],
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 50),
+                        SizedBox(
+                          width: 400,
+                          child: Card(
+                            color: const Color.fromARGB(255, 178, 0, 13),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            child: InkWell(
+                              onTap: () {
+                                createOpenQuestion(
+                                    widget.postStudent['studentTitle'],
+                                    widget.postExam['question'],
+                                    answer);
+                                Navigator.pop(context);
+                              },
+                              splashColor: Colors.black,
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const <Widget>[
+                                    Icon(
+                                      Icons.save_as_outlined,
+                                      size: 70.0,
+                                      color: Colors.white,
+                                    ),
+                                    Text("Sla op",
+                                        style: TextStyle(
+                                            fontSize: 30.0,
+                                            color: Colors.white))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
               : widget.postExam['type'] == 'openquestion'
                   ? Padding(
                       padding: const EdgeInsets.all(30),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Open Vraag',
                               style: TextStyle(
                                   fontSize: 50, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 80),
+                            const SizedBox(height: 80),
                             Text(
                               widget.postExam['question'],
-                              style: TextStyle(fontSize: 30),
+                              style: const TextStyle(fontSize: 30),
                             ),
-                            SizedBox(height: 50),
+                            const SizedBox(height: 50),
                             TextField(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: 'Antwoord',
+                                //labelText: 'Antwoord',
+                                hintText: 'Antwoord',
                               ),
-                              onChanged: (String value) {
-                                answer = value;
+                              onChanged: (String value2) {
+                                answer = value2;
                               },
                             ),
-                            SizedBox(height: 50),
+                            const SizedBox(height: 50),
                             SizedBox(
                               width: 400,
                               child: Card(
@@ -81,7 +191,9 @@ class _ExamWindowState extends State<ExamWindow> {
                                 child: InkWell(
                                   onTap: () {
                                     createOpenQuestion(
-                                        widget.postExam['question']);
+                                        widget.postStudent['studentTitle'],
+                                        widget.postExam['question'],
+                                        answer);
                                     Navigator.pop(context);
                                   },
                                   splashColor: Colors.black,
@@ -113,23 +225,26 @@ class _ExamWindowState extends State<ExamWindow> {
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
-                                Text(
+                                const Text(
                                   'Code Correctie',
                                   style: TextStyle(
                                       fontSize: 50,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 100),
+                                const SizedBox(height: 100),
                                 Text(widget.postExam['question'],
-                                    style: TextStyle(fontSize: 30)),
-                                SizedBox(height: 50),
+                                    style: const TextStyle(fontSize: 30)),
+                                const SizedBox(height: 50),
                                 TextField(
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Antwoord',
                                   ),
+                                  onChanged: (String value3) {
+                                    answer = value3;
+                                  },
                                 ),
-                                SizedBox(height: 50),
+                                const SizedBox(height: 50),
                                 SizedBox(
                                   width: 400,
                                   child: Card(
@@ -139,7 +254,13 @@ class _ExamWindowState extends State<ExamWindow> {
                                         borderRadius:
                                             BorderRadius.circular(50)),
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        createOpenQuestion(
+                                            widget.postStudent['studentTitle'],
+                                            widget.postExam['question'],
+                                            answer);
+                                        Navigator.pop(context);
+                                      },
                                       splashColor: Colors.black,
                                       child: Center(
                                         child: Column(
