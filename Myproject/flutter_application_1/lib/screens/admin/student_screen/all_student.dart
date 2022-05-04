@@ -44,7 +44,7 @@ class _AddStudentState extends State<AddStudent> {
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("students").doc(title);
 
-    Map<String, dynamic> studentList = {"studentTitle": title, 'score': score};
+    Map<String, dynamic> studentList = {"studentTitle": title};
 
     documentReference
         .set(studentList)
@@ -88,8 +88,8 @@ class _AddStudentState extends State<AddStudent> {
         stream:
             FirebaseFirestore.instance.collection("adminStudent").snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Er is iets mis gegaan');
+          if (snapshot.data == null) {
+            return const Text('Er zijn geen studenten');
           } else if (snapshot.hasData || snapshot.data != null) {
             return ListView(
                 shrinkWrap: true,

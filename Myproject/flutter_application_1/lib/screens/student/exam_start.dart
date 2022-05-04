@@ -5,7 +5,7 @@ import 'exam/exam.dart';
 
 class ExamStart extends StatefulWidget {
   final DocumentSnapshot post;
-  ExamStart({required this.post});
+  const ExamStart({required this.post});
   @override
   State<ExamStart> createState() => _ExamStartState();
 }

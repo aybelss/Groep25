@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ExamWindow extends StatefulWidget {
   final DocumentSnapshot postStudent;
   final DocumentSnapshot postExam;
-  ExamWindow({required this.postExam, required this.postStudent});
+  const ExamWindow({required this.postExam, required this.postStudent});
 
   @override
   State<ExamWindow> createState() => _ExamWindowState();
@@ -116,7 +116,7 @@ class _ExamWindowState extends State<ExamWindow> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                         SizedBox(
                           width: 400,
                           child: Card(
@@ -236,7 +236,7 @@ class _ExamWindowState extends State<ExamWindow> {
                                     style: const TextStyle(fontSize: 30)),
                                 const SizedBox(height: 50),
                                 TextField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Antwoord',
                                   ),

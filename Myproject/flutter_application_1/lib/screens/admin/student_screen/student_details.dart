@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class StudentDetails extends StatefulWidget {
   final DocumentSnapshot post;
-  StudentDetails({required this.post});
+  const StudentDetails({required this.post});
 
   @override
   State<StudentDetails> createState() => _StudentDetailsState();

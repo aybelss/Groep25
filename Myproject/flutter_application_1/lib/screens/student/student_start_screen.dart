@@ -29,8 +29,8 @@ class _StudentStartState extends State<StudentStart> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("students").snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Er is iets mis gegaan');
+          if (snapshot.data == null) {
+            return const Text('Er zijn geen studenten');
           } else if (snapshot.hasData || snapshot.data != null) {
             return ListView(
                 shrinkWrap: true,
