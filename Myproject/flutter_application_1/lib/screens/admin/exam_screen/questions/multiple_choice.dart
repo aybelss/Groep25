@@ -55,115 +55,119 @@ class _MultipleChoiceState extends State<MultipleChoice> {
       body: Form(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(hintText: "Vraag"),
-                onChanged: (val) {
-                  question = val;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Voer een vraag in';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(hintText: "Optie een"),
-                onChanged: (val) {
-                  option1 = val;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Voer een optie in';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(hintText: "Optie twee"),
-                onChanged: (val) {
-                  option2 = val;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Voer een optie in';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(hintText: "Optie drie"),
-                onChanged: (val) {
-                  option3 = val;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Voer een vraag in';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 6,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(hintText: "Juiste Antwoord"),
-                onChanged: (val) {
-                  correctAnswer = val;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Voer een juiste antwoord in';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 150,
-              ),
-              SizedBox(
-                width: 200,
-                height: 100,
-                child: Card(
-                  color: const Color.fromARGB(255, 178, 0, 13),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        createMultipleChoice(question);
-                      });
-                      Navigator.of(context).pop();
-                    },
-                    splashColor: Colors.black,
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const <Widget>[
-                          Text("Indienen",
-                              style: TextStyle(
-                                  fontSize: 30.0, color: Colors.white))
-                        ],
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: "Vraag"),
+                  onChanged: (val) {
+                    question = val;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Voer een vraag in';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: "Optie een"),
+                  onChanged: (val) {
+                    option1 = val;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Voer een optie in';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: "Optie twee"),
+                  onChanged: (val) {
+                    option2 = val;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Voer een optie in';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: "Optie drie"),
+                  onChanged: (val) {
+                    option3 = val;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Voer een vraag in';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                TextFormField(
+                  decoration:
+                      const InputDecoration(labelText: "Juiste Antwoord"),
+                  onChanged: (val) {
+                    correctAnswer = val;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Voer een juiste antwoord in';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 150,
+                ),
+                SizedBox(
+                  width: 200,
+                  height: 100,
+                  child: Card(
+                    color: const Color.fromARGB(255, 178, 0, 13),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          createMultipleChoice(question);
+                        });
+                        Navigator.of(context).pop();
+                      },
+                      splashColor: Colors.black,
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const <Widget>[
+                            Text("Indienen",
+                                style: TextStyle(
+                                    fontSize: 30.0, color: Colors.white))
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

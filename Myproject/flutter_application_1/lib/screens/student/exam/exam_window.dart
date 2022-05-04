@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class ExamWindow extends StatefulWidget {
   final DocumentSnapshot postStudent;
   final DocumentSnapshot postExam;
+  // ignore: use_key_in_widget_constructors
   const ExamWindow({required this.postExam, required this.postStudent});
 
   @override
@@ -29,7 +30,7 @@ class _ExamWindowState extends State<ExamWindow> {
         FirebaseFirestore.instance.collection('adminStudent');
 
     return await students.doc(studentId).set({
-      'answers': {
+      'studentAnswers': {
         question: {
           'answer': answer,
         }

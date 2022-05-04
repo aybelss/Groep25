@@ -30,7 +30,6 @@ class _AddStudentState extends State<AddStudent> {
     Map<String, dynamic> studentList = {
       "studentId": title,
       'score': score,
-      'studentAnswers': "",
       "location": ""
     };
 

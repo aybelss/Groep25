@@ -5,6 +5,7 @@ import 'exam_window.dart';
 
 class Exam extends StatefulWidget {
   final DocumentSnapshot post;
+  // ignore: use_key_in_widget_constructors
   const Exam({required this.post});
 
   @override

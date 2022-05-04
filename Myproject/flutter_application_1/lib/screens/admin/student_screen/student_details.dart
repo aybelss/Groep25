@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class StudentDetails extends StatefulWidget {
   final DocumentSnapshot post;
+  // ignore: use_key_in_widget_constructors
   const StudentDetails({required this.post});
 
   @override
