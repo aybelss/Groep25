@@ -12,6 +12,7 @@ class _OpenQuestionState extends State<OpenQuestion> {
   List openQuestion = List.empty();
   String question = " ";
   String answer = " ";
+  final _keyForm = GlobalKey<FormState>();
 
   createOpenQuestion(String question) {
     DocumentReference documentReference =
@@ -47,6 +48,7 @@ class _OpenQuestionState extends State<OpenQuestion> {
         title: const Text("Open Vraag"),
       ),
       body: Form(
+        key: _keyForm,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24),
           child: SingleChildScrollView(
@@ -61,14 +63,14 @@ class _OpenQuestionState extends State<OpenQuestion> {
                     question = val;
                   },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Voer een vraag in';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 20,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: "Antwoord"),
@@ -76,7 +78,7 @@ class _OpenQuestionState extends State<OpenQuestion> {
                     answer = val;
                   },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Voer een antwoord in';
                     }
                     return null;
@@ -94,10 +96,12 @@ class _OpenQuestionState extends State<OpenQuestion> {
                         borderRadius: BorderRadius.circular(50)),
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          createOpenQuestion(question);
-                        });
-                        Navigator.of(context).pop();
+                        if (_keyForm.currentState!.validate()) {
+                          setState(() {
+                            createOpenQuestion(question);
+                          });
+                          Navigator.of(context).pop();
+                        }
                       },
                       splashColor: Colors.black,
                       child: Center(

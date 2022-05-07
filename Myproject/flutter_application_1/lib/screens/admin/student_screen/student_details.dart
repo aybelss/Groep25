@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'answer.dart';
+
 class StudentDetails extends StatefulWidget {
   final DocumentSnapshot post;
   // ignore: use_key_in_widget_constructors
@@ -12,6 +14,15 @@ class StudentDetails extends StatefulWidget {
 
 class _StudentDetailsState extends State<StudentDetails> {
   String input = "";
+  navigateToDetail(BuildContext context, DocumentSnapshot post) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AnswerWindow(
+            post: post,
+          ),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +130,9 @@ class _StudentDetailsState extends State<StudentDetails> {
                 Card(
                   color: Colors.grey,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      navigateToDetail(context, widget.post);
+                    },
                     splashColor: Colors.black,
                     child: Center(
                       child: Column(

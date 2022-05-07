@@ -12,6 +12,7 @@ class _CodeCorrectionState extends State<CodeCorrection> {
   List openQuestion = List.empty();
   String question = " ";
   String answer = " ";
+  final _keyForm = GlobalKey<FormState>();
 
   createCodeCorrection(String question) {
     DocumentReference documentReference =
@@ -47,6 +48,7 @@ class _CodeCorrectionState extends State<CodeCorrection> {
         title: const Text("Code Correctie"),
       ),
       body: Form(
+        key: _keyForm,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24),
           child: SingleChildScrollView(
@@ -61,7 +63,7 @@ class _CodeCorrectionState extends State<CodeCorrection> {
                     question = val;
                   },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Voer een vraag in';
                     }
                     return null;
@@ -76,7 +78,7 @@ class _CodeCorrectionState extends State<CodeCorrection> {
                     answer = val;
                   },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Voer een antwoord in';
                     }
                     return null;
@@ -94,10 +96,12 @@ class _CodeCorrectionState extends State<CodeCorrection> {
                         borderRadius: BorderRadius.circular(50)),
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          createCodeCorrection(question);
-                        });
-                        Navigator.of(context).pop();
+                        if (_keyForm.currentState!.validate()) {
+                          setState(() {
+                            createCodeCorrection(question);
+                          });
+                          Navigator.of(context).pop();
+                        }
                       },
                       splashColor: Colors.black,
                       child: Center(

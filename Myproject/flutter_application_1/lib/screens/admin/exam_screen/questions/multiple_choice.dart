@@ -15,6 +15,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
   String option2 = " ";
   String option3 = " ";
   String correctAnswer = " ";
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   createMultipleChoice(String question) {
     DocumentReference documentReference =
@@ -53,6 +54,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
         title: const Text("Meerkeuze Vraag"),
       ),
       body: Form(
+        key: _formKey,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24),
           child: SingleChildScrollView(
@@ -64,63 +66,63 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: "Vraag"),
-                  onChanged: (val) {
-                    question = val;
-                  },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return 'Voer een vraag in';
                     }
                     return null;
                   },
+                  onChanged: (value) {
+                    question = value;
+                  },
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 20,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: "Optie een"),
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return 'Voer een optie in';
+                    }
+                    return null;
+                  },
                   onChanged: (val) {
                     option1 = val;
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Voer een optie in';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 20,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: "Optie twee"),
-                  onChanged: (val) {
-                    option2 = val;
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return 'Voer een optie in';
                     }
                     return null;
                   },
+                  onChanged: (val) {
+                    option2 = val;
+                  },
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 20,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: "Optie drie"),
-                  onChanged: (val) {
-                    option3 = val;
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return 'Voer een vraag in';
                     }
                     return null;
                   },
+                  onChanged: (val) {
+                    option3 = val;
+                  },
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 20,
                 ),
                 TextFormField(
                   decoration:
@@ -128,15 +130,15 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   onChanged: (val) {
                     correctAnswer = val;
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
+                  validator: (val) {
+                    if (val!.isEmpty) {
                       return 'Voer een juiste antwoord in';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(
-                  height: 150,
+                  height: 100,
                 ),
                 SizedBox(
                   width: 200,
@@ -147,10 +149,13 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                         borderRadius: BorderRadius.circular(50)),
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          createMultipleChoice(question);
-                        });
-                        Navigator.of(context).pop();
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            createMultipleChoice(question);
+                          });
+
+                          Navigator.of(context).pop();
+                        }
                       },
                       splashColor: Colors.black,
                       child: Center(

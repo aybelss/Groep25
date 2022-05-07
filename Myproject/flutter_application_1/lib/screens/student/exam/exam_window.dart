@@ -13,29 +13,51 @@ class ExamWindow extends StatefulWidget {
   State<ExamWindow> createState() => _ExamWindowState();
 }
 
-MultipleChoice() {}
-
-OpenQuestion() {
-  //code
-}
-CodeCorrection() {
-  //code
-}
-
 class _ExamWindowState extends State<ExamWindow> {
   String answer = "";
+
   Future<void> createOpenQuestion(
-      String studentId, String question, String answer) async {
+      String studentId, String question, String answer, String type) async {
     CollectionReference students =
         FirebaseFirestore.instance.collection('adminStudent');
 
-    return await students.doc(studentId).set({
-      'studentAnswers': {
-        question: {
-          'answer': answer,
-        }
+    if (type == "multiplechoice") {
+      if (answer == widget.postExam['correctAnswer']) {
+        return await students.doc(studentId).set({
+          'studentAnswers': {
+            question: {'answer': answer, 'score': 2}
+          }
+        }, SetOptions(merge: true));
+      } else if (answer != widget.postExam['correctAnswer']) {
+        return await students.doc(studentId).set({
+          'studentAnswers': {
+            question: {'answer': answer, 'score': 0}
+          }
+        }, SetOptions(merge: true));
       }
-    }, SetOptions(merge: true));
+    }
+    if (type == "codecorrection") {
+      if (answer == widget.postExam['correctAnswer']) {
+        return await students.doc(studentId).set({
+          'studentAnswers': {
+            question: {'answer': answer, 'score': 2}
+          }
+        }, SetOptions(merge: true));
+      } else if (answer != widget.postExam['correctAnswer']) {
+        return await students.doc(studentId).set({
+          'studentAnswers': {
+            question: {'answer': answer, 'score': 0}
+          }
+        }, SetOptions(merge: true));
+      }
+    }
+    if (type == "openquestion") {
+      return await students.doc(studentId).set({
+        'studentAnswers': {
+          question: {'answer': answer, 'score': 0}
+        }
+      }, SetOptions(merge: true));
+    }
   }
 
   @override
@@ -129,7 +151,8 @@ class _ExamWindowState extends State<ExamWindow> {
                                 createOpenQuestion(
                                     widget.postStudent['studentTitle'],
                                     widget.postExam['question'],
-                                    answer);
+                                    answer,
+                                    widget.postExam['type']);
                                 Navigator.pop(context);
                               },
                               splashColor: Colors.black,
@@ -194,7 +217,8 @@ class _ExamWindowState extends State<ExamWindow> {
                                     createOpenQuestion(
                                         widget.postStudent['studentTitle'],
                                         widget.postExam['question'],
-                                        answer);
+                                        answer,
+                                        widget.postExam['type']);
                                     Navigator.pop(context);
                                   },
                                   splashColor: Colors.black,
@@ -259,7 +283,8 @@ class _ExamWindowState extends State<ExamWindow> {
                                         createOpenQuestion(
                                             widget.postStudent['studentTitle'],
                                             widget.postExam['question'],
-                                            answer);
+                                            answer,
+                                            widget.postExam['type']);
                                         Navigator.pop(context);
                                       },
                                       splashColor: Colors.black,

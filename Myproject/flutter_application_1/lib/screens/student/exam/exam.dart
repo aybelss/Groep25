@@ -13,6 +13,8 @@ class Exam extends StatefulWidget {
 }
 
 class _ExamState extends State<Exam> {
+  get data => null;
+
   navigateToDetail(BuildContext context, DocumentSnapshot studentpost,
       DocumentSnapshot exampost) {
     Navigator.push(
@@ -21,6 +23,33 @@ class _ExamState extends State<Exam> {
           builder: (context) =>
               ExamWindow(postStudent: studentpost, postExam: exampost),
         ));
+  }
+
+  Future calculatePoints() async {
+    String id = widget.post['studentTitle'];
+    var collection = FirebaseFirestore.instance.collection('adminStudent');
+    await collection.get().then((value) {
+      for (var queryDocumentSnapshot in value.docs) {
+        int score = 0;
+        Map<String, dynamic> data = queryDocumentSnapshot.data();
+        id = queryDocumentSnapshot.id;
+        var test = data['studentAnswers'];
+        test.forEach((key, value) {
+          score += int.parse(value['score'].toString());
+        });
+        collection.doc(id).update({'score': score});
+      }
+    });
+  }
+
+  deleteStudent(id) {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("students").doc(id);
+
+    documentReference
+        .delete()
+        // ignore: avoid_print
+        .whenComplete(() => print("Student succesvol verwijdert"));
   }
 
   @override
@@ -62,6 +91,8 @@ class _ExamState extends State<Exam> {
       //button that finishes the exam
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          calculatePoints();
+          deleteStudent(widget.post['studentTitle']);
           Navigator.push(
               context,
               MaterialPageRoute(

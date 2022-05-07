@@ -51,16 +51,16 @@ class _AddStudentState extends State<AddStudent> {
         .whenComplete(() => print("Student succesvol gemaakt"));
   }
 
-  deleteStudent(item) {
+  deleteStudent(id) {
     DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("adminStudent").doc(item);
+        FirebaseFirestore.instance.collection("adminStudent").doc(id);
 
     documentReference
         .delete()
         // ignore: avoid_print
         .whenComplete(() => print("Student succesvol verwijdert"));
     documentReference =
-        FirebaseFirestore.instance.collection("students").doc(item);
+        FirebaseFirestore.instance.collection("students").doc(id);
     documentReference
         .delete()
         // ignore: avoid_print
@@ -90,26 +90,29 @@ class _AddStudentState extends State<AddStudent> {
           if (snapshot.data == null) {
             return const Text('Er zijn geen studenten');
           } else if (snapshot.hasData || snapshot.data != null) {
-            return ListView(
-                shrinkWrap: true,
-                children: snapshot.data!.docs.map((documentSnapshot) {
-                  return Card(
-                    elevation: 4,
-                    child: ListTile(
-                      title: Text(documentSnapshot["studentId"]),
-                      onTap: () => navigateToDetail(context, documentSnapshot),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete),
-                        color: Colors.red,
-                        onPressed: () {
-                          setState(() {
-                            deleteStudent(documentSnapshot["studentId"]);
-                          });
-                        },
+            return SingleChildScrollView(
+              child: ListView(
+                  shrinkWrap: true,
+                  children: snapshot.data!.docs.map((documentSnapshot) {
+                    return Card(
+                      elevation: 4,
+                      child: ListTile(
+                        title: Text(documentSnapshot["studentId"]),
+                        onTap: () =>
+                            navigateToDetail(context, documentSnapshot),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          color: Colors.red,
+                          onPressed: () {
+                            setState(() {
+                              deleteStudent(documentSnapshot["studentId"]);
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                  );
-                }).toList());
+                    );
+                  }).toList()),
+            );
           }
           return const Center(
             child: CircularProgressIndicator(
@@ -154,9 +157,9 @@ class _AddStudentState extends State<AddStudent> {
                     TextButton(
                         onPressed: () {
                           // ignore: non_constant_identifier_names
-                          List<String> StudentIds = title.split(',');
+                          List<String> StudentIds = title.split(';');
                           // ignore: unnecessary_null_comparison
-                          if (title.split(',') == null) {
+                          if (title.split(';') == null) {
                             StudentIds = [title];
                           }
                           if (title != '') {
