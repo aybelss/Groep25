@@ -15,6 +15,8 @@ class ExamWindow extends StatefulWidget {
 
 class _ExamWindowState extends State<ExamWindow> {
   String answer = "";
+  int questionId = 0;
+  final TextEditingController _textEditingController = TextEditingController();
 
   Future<void> createOpenQuestion(
       String studentId, String question, String answer, String type) async {
@@ -40,21 +42,21 @@ class _ExamWindowState extends State<ExamWindow> {
       if (answer == widget.postExam['correctAnswer']) {
         return await students.doc(studentId).set({
           'studentAnswers': {
-            question: {'answer': answer, 'score': 2}
+            question: {'answer': answer, 'score': 2, 'question': question}
           }
         }, SetOptions(merge: true));
       } else if (answer != widget.postExam['correctAnswer']) {
         return await students.doc(studentId).set({
           'studentAnswers': {
-            question: {'answer': answer, 'score': 0}
+            question: {'answer': answer, 'score': 0, 'question': question}
           }
         }, SetOptions(merge: true));
       }
     }
     if (type == "openquestion") {
       return await students.doc(studentId).set({
-        'studentAnswers': {
-          question: {'answer': answer, 'score': 0}
+        'openQuestionAnswers': {
+          question: {'answer': answer}
         }
       }, SetOptions(merge: true));
     }
@@ -153,7 +155,9 @@ class _ExamWindowState extends State<ExamWindow> {
                                     widget.postExam['question'],
                                     answer,
                                     widget.postExam['type']);
-                                Navigator.pop(context);
+                                questionId += 1;
+                                Navigator.of(context)
+                                    .pop(_textEditingController.text);
                               },
                               splashColor: Colors.black,
                               child: Center(
@@ -196,6 +200,7 @@ class _ExamWindowState extends State<ExamWindow> {
                             ),
                             const SizedBox(height: 50),
                             TextField(
+                              controller: _textEditingController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 //labelText: 'Antwoord',
@@ -219,7 +224,9 @@ class _ExamWindowState extends State<ExamWindow> {
                                         widget.postExam['question'],
                                         answer,
                                         widget.postExam['type']);
-                                    Navigator.pop(context);
+                                    questionId += 1;
+                                    Navigator.of(context)
+                                        .pop(_textEditingController.text);
                                   },
                                   splashColor: Colors.black,
                                   child: Center(
@@ -261,6 +268,7 @@ class _ExamWindowState extends State<ExamWindow> {
                                     style: const TextStyle(fontSize: 30)),
                                 const SizedBox(height: 50),
                                 TextField(
+                                  controller: _textEditingController,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Antwoord',
@@ -285,7 +293,9 @@ class _ExamWindowState extends State<ExamWindow> {
                                             widget.postExam['question'],
                                             answer,
                                             widget.postExam['type']);
-                                        Navigator.pop(context);
+                                        questionId += 1;
+                                        Navigator.of(context)
+                                            .pop(_textEditingController.text);
                                       },
                                       splashColor: Colors.black,
                                       child: Center(

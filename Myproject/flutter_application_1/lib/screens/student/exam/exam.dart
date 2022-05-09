@@ -22,7 +22,9 @@ class _ExamState extends State<Exam> {
         MaterialPageRoute(
           builder: (context) =>
               ExamWindow(postStudent: studentpost, postExam: exampost),
-        ));
+        )).then((valueFromTextField) {
+      // save the value from the textfield
+    });
   }
 
   Future calculatePoints() async {

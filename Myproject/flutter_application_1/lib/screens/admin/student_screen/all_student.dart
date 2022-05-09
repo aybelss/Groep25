@@ -12,6 +12,8 @@ class AddStudent extends StatefulWidget {
   State<AddStudent> createState() => _AddStudentState();
 }
 
+var docId = "";
+
 class _AddStudentState extends State<AddStudent> {
   List student = List.empty();
   String title = "";
@@ -98,8 +100,10 @@ class _AddStudentState extends State<AddStudent> {
                       elevation: 4,
                       child: ListTile(
                         title: Text(documentSnapshot["studentId"]),
-                        onTap: () =>
-                            navigateToDetail(context, documentSnapshot),
+                        onTap: () {
+                          docId = documentSnapshot["studentId"];
+                          navigateToDetail(context, documentSnapshot);
+                        },
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
                           color: Colors.red,

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/admin/student_screen/all_student.dart';
 
 class AnswerWindow extends StatefulWidget {
   final DocumentSnapshot post;
@@ -11,48 +12,43 @@ class AnswerWindow extends StatefulWidget {
 }
 
 class _AnswerWindowState extends State<AnswerWindow> {
-  List<Widget> makeListWidget(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
-    return snapshot.data!.docs.map((document) {
-      return ListTile(
-        title: Text(document['studentAnswers'].toString()),
-      );
-    }).toList();
-  }
+  final database = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Antwoorden"),
+        title: const Text('Antwoorden'),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  height: 500,
-                  width: 1100,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
-                    ),
-                  ),
-                  child: StreamBuilder<QuerySnapshot<Object?>>(
-                    stream: FirebaseFirestore.instance
-                        .collection("adminStudent")
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      return ListView(
-                        children: makeListWidget(snapshot),
-                      );
-                    },
-                  ),
-                ),
-              ]),
-        ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: database.collection("adminStudent").snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return const Text('Er zijn geen studenten');
+          } else if (snapshot.hasData || snapshot.data != null) {
+            return SingleChildScrollView(
+              child: ListView(
+                  shrinkWrap: true,
+                  children: snapshot.data!.docs.map((documentSnapshot) {
+                    return Card(
+                      elevation: 4,
+                      child: ListTile(
+                        title:
+                            Text(widget.post['openQuestionAnswers'].toString()),
+                        onTap: () {},
+                      ),
+                    );
+                  }).toList()),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.red,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
