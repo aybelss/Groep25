@@ -54,12 +54,43 @@ class _ExamState extends State<Exam> {
         .whenComplete(() => print("Student succesvol verwijdert"));
   }
 
+  int t = 300;
+  countDown() {
+    Future.doWhile(() async {
+      //this changes the value by -1 every second until it reaches zero
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+      setState(() {
+        //add text widget in your build method which takes t as the data
+        t--;
+      });
+      if (t == 0) {
+        calculatePoints();
+        deleteStudent(widget.post['studentTitle']);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const StartScreen(),
+            ));
+      }
+      return t != 0;
+    });
+  }
+
+  @override
+  // ignore: must_call_super
+  void initState() {
+    countDown();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.post['studentTitle']),
+        title: Text("Timer: " + t.toString()),
         automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("exams").snapshots(),
