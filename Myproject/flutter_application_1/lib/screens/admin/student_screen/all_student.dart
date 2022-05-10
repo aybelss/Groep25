@@ -12,8 +12,6 @@ class AddStudent extends StatefulWidget {
   State<AddStudent> createState() => _AddStudentState();
 }
 
-var docId = "";
-
 class _AddStudentState extends State<AddStudent> {
   List student = List.empty();
   String title = "";
@@ -54,13 +52,21 @@ class _AddStudentState extends State<AddStudent> {
   }
 
   deleteStudent(id) {
+    for (var i = 0; i < 15; i++) {
+      var documentReference1 = FirebaseFirestore.instance
+          .collection("adminStudent")
+          .doc(id)
+          .collection('openQuestionAnswers');
+
+      documentReference1.doc(i.toString()).delete();
+    }
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("adminStudent").doc(id);
-
     documentReference
         .delete()
         // ignore: avoid_print
         .whenComplete(() => print("Student succesvol verwijdert"));
+
     documentReference =
         FirebaseFirestore.instance.collection("students").doc(id);
     documentReference
@@ -101,7 +107,6 @@ class _AddStudentState extends State<AddStudent> {
                       child: ListTile(
                         title: Text(documentSnapshot["studentId"]),
                         onTap: () {
-                          docId = documentSnapshot["studentId"];
                           navigateToDetail(context, documentSnapshot);
                         },
                         trailing: IconButton(

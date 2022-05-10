@@ -3,6 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'exam_start.dart';
+
 class ExamWindow extends StatefulWidget {
   final DocumentSnapshot postStudent;
   final DocumentSnapshot postExam;
@@ -12,8 +14,6 @@ class ExamWindow extends StatefulWidget {
   @override
   State<ExamWindow> createState() => _ExamWindowState();
 }
-
-int questionID = 0;
 
 class _ExamWindowState extends State<ExamWindow> {
   String answer = "";

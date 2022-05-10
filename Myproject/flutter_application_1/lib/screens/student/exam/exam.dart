@@ -13,8 +13,6 @@ class Exam extends StatefulWidget {
 }
 
 class _ExamState extends State<Exam> {
-  get data => null;
-
   navigateToDetail(BuildContext context, DocumentSnapshot studentpost,
       DocumentSnapshot exampost) {
     Navigator.push(

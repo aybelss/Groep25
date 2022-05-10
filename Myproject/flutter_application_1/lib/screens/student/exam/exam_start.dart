@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'exam/exam.dart';
+import 'exam.dart';
 
 class ExamStart extends StatefulWidget {
   final DocumentSnapshot post;
@@ -12,7 +12,16 @@ class ExamStart extends StatefulWidget {
   State<ExamStart> createState() => _ExamStartState();
 }
 
+int questionID = 0;
+
 class _ExamStartState extends State<ExamStart> {
+  @override
+  void initState() {
+    if (questionID != 0) {
+      questionID = 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

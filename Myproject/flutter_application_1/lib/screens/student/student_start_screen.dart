@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/student/exam_start.dart';
+import 'package:flutter_application_1/screens/student/exam/exam_start.dart';
 
 class StudentStart extends StatefulWidget {
   const StudentStart({Key? key}) : super(key: key);
