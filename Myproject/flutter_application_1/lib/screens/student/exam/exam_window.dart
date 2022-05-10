@@ -13,12 +13,29 @@ class ExamWindow extends StatefulWidget {
   State<ExamWindow> createState() => _ExamWindowState();
 }
 
+int questionID = 0;
+
 class _ExamWindowState extends State<ExamWindow> {
   String answer = "";
-  int questionId = 0;
+
   final TextEditingController _textEditingController = TextEditingController();
 
-  Future<void> createOpenQuestion(
+  Future<void> createOpenAnswer(String studentId, String question,
+      String answer, String questionID) async {
+    CollectionReference students = FirebaseFirestore.instance
+        .collection('adminStudent')
+        .doc(studentId)
+        .collection('openQuestionAnswers');
+    return await students.doc(questionID).set(
+      {
+        'question': question,
+        'answer': answer,
+        'questionID': questionID,
+      },
+    );
+  }
+
+  Future<void> createAnswer(
       String studentId, String question, String answer, String type) async {
     CollectionReference students =
         FirebaseFirestore.instance.collection('adminStudent');
@@ -52,13 +69,6 @@ class _ExamWindowState extends State<ExamWindow> {
           }
         }, SetOptions(merge: true));
       }
-    }
-    if (type == "openquestion") {
-      return await students.doc(studentId).set({
-        'openQuestionAnswers': {
-          question: {'answer': answer}
-        }
-      }, SetOptions(merge: true));
     }
   }
 
@@ -150,12 +160,11 @@ class _ExamWindowState extends State<ExamWindow> {
                                 borderRadius: BorderRadius.circular(50)),
                             child: InkWell(
                               onTap: () {
-                                createOpenQuestion(
+                                createAnswer(
                                     widget.postStudent['studentTitle'],
                                     widget.postExam['question'],
                                     answer,
                                     widget.postExam['type']);
-                                questionId += 1;
                                 Navigator.of(context)
                                     .pop(_textEditingController.text);
                               },
@@ -219,12 +228,12 @@ class _ExamWindowState extends State<ExamWindow> {
                                     borderRadius: BorderRadius.circular(50)),
                                 child: InkWell(
                                   onTap: () {
-                                    createOpenQuestion(
+                                    createOpenAnswer(
                                         widget.postStudent['studentTitle'],
                                         widget.postExam['question'],
                                         answer,
-                                        widget.postExam['type']);
-                                    questionId += 1;
+                                        questionID.toString());
+                                    questionID++;
                                     Navigator.of(context)
                                         .pop(_textEditingController.text);
                                   },
@@ -288,12 +297,11 @@ class _ExamWindowState extends State<ExamWindow> {
                                             BorderRadius.circular(50)),
                                     child: InkWell(
                                       onTap: () {
-                                        createOpenQuestion(
+                                        createAnswer(
                                             widget.postStudent['studentTitle'],
                                             widget.postExam['question'],
                                             answer,
                                             widget.postExam['type']);
-                                        questionId += 1;
                                         Navigator.of(context)
                                             .pop(_textEditingController.text);
                                       },

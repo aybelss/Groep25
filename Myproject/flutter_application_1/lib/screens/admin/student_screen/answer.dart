@@ -16,20 +16,43 @@ class _AnswerWindowState extends State<AnswerWindow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Antwoorden'),
-        ),
-        body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            child: SingleChildScrollView(
-                child: Column(children: [
-              const SizedBox(
-                height: 20,
+      appBar: AppBar(
+        title: const Text('Antwoorden'),
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection("adminStudent")
+            .doc(widget.post['studentId'])
+            .collection('openQuestionAnswers')
+            .orderBy('questionID')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return const Text('Er zijn geen studenten');
+          } else if (snapshot.hasData || snapshot.data != null) {
+            return SingleChildScrollView(
+              child: ListView(
+                  shrinkWrap: true,
+                  children: snapshot.data!.docs.map((documentSnapshot) {
+                    return Card(
+                      elevation: 4,
+                      child: ListTile(
+                          title: Text('Vraag: ' + documentSnapshot["question"]),
+                          subtitle:
+                              Text('Antwoord: ' + documentSnapshot["answer"])),
+                    );
+                  }).toList()),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.red,
               ),
-              Text(
-                widget.post['openQuestionAnswers'].toString(),
-                style: const TextStyle(fontSize: 20),
-              ),
-            ]))));
+            ),
+          );
+        },
+      ),
+    );
   }
 }
