@@ -22,7 +22,6 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Huidige Locatie"),
-        centerTitle: true,
       ),
       body: GoogleMap(
         initialCameraPosition: initialCameraPosition,

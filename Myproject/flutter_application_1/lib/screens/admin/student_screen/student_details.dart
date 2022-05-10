@@ -15,11 +15,21 @@ class StudentDetails extends StatefulWidget {
 
 class _StudentDetailsState extends State<StudentDetails> {
   String input = "";
-  navigateToDetail(BuildContext context, DocumentSnapshot post) {
+  navigateToLocate(BuildContext context, DocumentSnapshot post) {
     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => CurrentLocationScreen(
+            post: post,
+          ),
+        ));
+  }
+
+  navigateToAnswer(BuildContext context, DocumentSnapshot post) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AnswerWindow(
             post: post,
           ),
         ));
@@ -109,7 +119,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                   color: Colors.grey,
                   child: InkWell(
                     onTap: () {
-                      navigateToDetail(context, widget.post);
+                      navigateToLocate(context, widget.post);
                     },
                     splashColor: Colors.black,
                     child: Center(
@@ -134,7 +144,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                   color: Colors.grey,
                   child: InkWell(
                     onTap: () {
-                      navigateToDetail(context, widget.post);
+                      navigateToAnswer(context, widget.post);
                     },
                     splashColor: Colors.black,
                     child: Center(
