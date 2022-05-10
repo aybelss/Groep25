@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/admin/student_screen/current_location.dart';
 
 import 'answer.dart';
 
@@ -18,7 +19,7 @@ class _StudentDetailsState extends State<StudentDetails> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AnswerWindow(
+          builder: (context) => CurrentLocationScreen(
             post: post,
           ),
         ));
@@ -107,7 +108,9 @@ class _StudentDetailsState extends State<StudentDetails> {
                 Card(
                   color: Colors.grey,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      navigateToDetail(context, widget.post);
+                    },
                     splashColor: Colors.black,
                     child: Center(
                       child: Column(
