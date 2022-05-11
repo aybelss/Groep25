@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/start_screen.dart';
 import 'exam_window.dart';
+import 'exam_start.dart';
 
 class Exam extends StatefulWidget {
   final DocumentSnapshot post;
@@ -12,7 +13,35 @@ class Exam extends StatefulWidget {
   State<Exam> createState() => _ExamState();
 }
 
-class _ExamState extends State<Exam> {
+class _ExamState extends State<Exam> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    countDown();
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.detached ||
+        state == AppLifecycleState.inactive) {
+      return;
+    }
+    final isBackground = state == AppLifecycleState.paused;
+
+    if (isBackground) {
+      print("paused");
+      counter++;
+    }
+  }
+
   navigateToDetail(BuildContext context, DocumentSnapshot studentpost,
       DocumentSnapshot exampost) {
     Navigator.push(
@@ -64,6 +93,7 @@ class _ExamState extends State<Exam> {
         t--;
       });
       if (t == 0) {
+        hasCheated(counter);
         calculatePoints();
         deleteStudent(widget.post['studentTitle']);
         Navigator.push(
@@ -76,10 +106,18 @@ class _ExamState extends State<Exam> {
     });
   }
 
-  @override
-  // ignore: must_call_super
-  void initState() {
-    countDown();
+  hasCheated(int count) async {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("adminStudent")
+        .doc(widget.post['studentTitle']);
+
+    Map<String, dynamic> studentList = {"hasCheated": count};
+    SetOptions(merge: true);
+
+    documentReference
+        .update(studentList)
+        // ignore: avoid_print
+        .whenComplete(() => print("Counter succesvoll toegevoegd"));
   }
 
   @override
@@ -122,6 +160,7 @@ class _ExamState extends State<Exam> {
       //button that finishes the exam
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          hasCheated(counter);
           calculatePoints();
           deleteStudent(widget.post['studentTitle']);
           Navigator.push(

@@ -30,7 +30,8 @@ class _AddStudentState extends State<AddStudent> {
     Map<String, dynamic> studentList = {
       "studentId": title,
       'score': score,
-      "location": ""
+      "location": "",
+      "hasCheated": ""
     };
 
     documentReference

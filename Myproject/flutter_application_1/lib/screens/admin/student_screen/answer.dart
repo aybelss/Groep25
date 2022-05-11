@@ -11,8 +11,6 @@ class AnswerWindow extends StatefulWidget {
 }
 
 class _AnswerWindowState extends State<AnswerWindow> {
-  final database = FirebaseFirestore.instance;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

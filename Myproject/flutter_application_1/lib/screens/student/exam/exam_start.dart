@@ -13,12 +13,17 @@ class ExamStart extends StatefulWidget {
 }
 
 int questionID = 0;
+int counter = 0;
 
 class _ExamStartState extends State<ExamStart> {
   @override
+  // ignore: must_call_super
   void initState() {
     if (questionID != 0) {
       questionID = 0;
+    }
+    if (counter != 0) {
+      counter = 0;
     }
   }
 

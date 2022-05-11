@@ -15,7 +15,34 @@ class ExamWindow extends StatefulWidget {
   State<ExamWindow> createState() => _ExamWindowState();
 }
 
-class _ExamWindowState extends State<ExamWindow> {
+class _ExamWindowState extends State<ExamWindow> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.detached ||
+        state == AppLifecycleState.inactive) {
+      return;
+    }
+    final isBackground = state == AppLifecycleState.paused;
+
+    if (isBackground) {
+      print("paused");
+      counter++;
+    }
+  }
+
   String answer = "";
 
   final TextEditingController _textEditingController = TextEditingController();

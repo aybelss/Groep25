@@ -35,6 +35,20 @@ class _StudentDetailsState extends State<StudentDetails> {
         ));
   }
 
+  hasCheated() {
+    if (widget.post['hasCheated'] == "") {
+      return const Text("De student heeft zijn examen nog niet gemaakt.",
+          style: TextStyle(fontSize: 30));
+    } else {
+      return Text(
+        'De student heeft ' +
+            widget.post['hasCheated'].toString() +
+            ' gecheat.',
+        style: const TextStyle(fontSize: 30),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +91,11 @@ class _StudentDetailsState extends State<StudentDetails> {
               ],
             ),
             const SizedBox(
-              height: 100,
+              height: 50,
+            ),
+            hasCheated(),
+            const SizedBox(
+              height: 50,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

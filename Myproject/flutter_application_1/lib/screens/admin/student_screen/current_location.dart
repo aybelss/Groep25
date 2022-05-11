@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CurrentLocationScreen extends StatefulWidget {
-  //const CurrentLocationScreen({Key? key}) : super(key: key);
   final DocumentSnapshot post;
 
+  // ignore: use_key_in_widget_constructors
   const CurrentLocationScreen({required this.post});
   @override
   State<CurrentLocationScreen> createState() => _CurrentLocationScreenState();
