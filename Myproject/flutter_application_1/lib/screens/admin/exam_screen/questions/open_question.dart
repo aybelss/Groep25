@@ -20,7 +20,6 @@ class _OpenQuestionState extends State<OpenQuestion> {
 
     Map<String, String> openQuestionList = {
       "question": question,
-      "input": "",
       "type": "openquestion"
     };
 
@@ -55,7 +54,7 @@ class _OpenQuestionState extends State<OpenQuestion> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(labelText: "Vraag"),
@@ -70,27 +69,13 @@ class _OpenQuestionState extends State<OpenQuestion> {
                   },
                 ),
                 const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: "Antwoord"),
-                  onChanged: (val) {
-                    answer = val;
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Voer een antwoord in';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
                   height: 295,
                 ),
                 SizedBox(
                   width: 200,
                   height: 100,
                   child: Card(
+                    elevation: 10,
                     color: const Color.fromARGB(255, 178, 0, 13),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),

@@ -12,13 +12,14 @@ class ExamScreen extends StatefulWidget {
 }
 
 class _ExamScreenState extends State<ExamScreen> {
-  List<Widget> makeListWidget(AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+  List<Widget> makeListQuestion(
+      AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     return snapshot.data!.docs.map<Widget>((document) {
       return ListTile(
         title: Text(document["question"]),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
-          color: Colors.red,
+          color: const Color.fromARGB(255, 178, 0, 13),
           onPressed: () {
             setState(() {
               deleteQuestion(document["question"]);
@@ -70,7 +71,7 @@ class _ExamScreenState extends State<ExamScreen> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     return ListView(
-                      children: makeListWidget(snapshot),
+                      children: makeListQuestion(snapshot),
                     );
                   },
                 ),
@@ -82,7 +83,8 @@ class _ExamScreenState extends State<ExamScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Card(
-                    color: Colors.grey,
+                    elevation: 10,
+                    color: const Color.fromARGB(255, 178, 0, 13),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     child: InkWell(
@@ -100,10 +102,12 @@ class _ExamScreenState extends State<ExamScreen> {
                             Icon(
                               Icons.add_box,
                               size: 40.0,
+                              color: Colors.white,
                             ),
                             Text("     MeerKeuze Vraag     ",
                                 style: TextStyle(
                                   fontSize: 30.0,
+                                  color: Colors.white,
                                 ))
                           ],
                         ),
@@ -112,7 +116,8 @@ class _ExamScreenState extends State<ExamScreen> {
                   ),
                   const Padding(padding: EdgeInsets.all(50)),
                   Card(
-                    color: Colors.grey,
+                    elevation: 10,
+                    color: const Color.fromARGB(255, 178, 0, 13),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     child: InkWell(
@@ -130,10 +135,12 @@ class _ExamScreenState extends State<ExamScreen> {
                             Icon(
                               Icons.add_box,
                               size: 40.0,
+                              color: Colors.white,
                             ),
                             Text("          Open vraag          ",
                                 style: TextStyle(
                                   fontSize: 30.0,
+                                  color: Colors.white,
                                 ))
                           ],
                         ),
@@ -142,7 +149,8 @@ class _ExamScreenState extends State<ExamScreen> {
                   ),
                   const Padding(padding: EdgeInsets.all(50)),
                   Card(
-                    color: Colors.grey,
+                    elevation: 10,
+                    color: const Color.fromARGB(255, 178, 0, 13),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     child: InkWell(
@@ -160,10 +168,12 @@ class _ExamScreenState extends State<ExamScreen> {
                             Icon(
                               Icons.add_box,
                               size: 40.0,
+                              color: Colors.white,
                             ),
                             Text("      Code correctie      ",
                                 style: TextStyle(
                                   fontSize: 30.0,
+                                  color: Colors.white,
                                 ))
                           ],
                         ),

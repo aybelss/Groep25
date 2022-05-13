@@ -20,6 +20,7 @@ class _ExamState extends State<Exam> with WidgetsBindingObserver {
     countDown();
     WidgetsBinding.instance!.addObserver(this);
   }
+  //hahha
 
   @override
   void dispose() {
@@ -37,12 +38,11 @@ class _ExamState extends State<Exam> with WidgetsBindingObserver {
     final isBackground = state == AppLifecycleState.paused;
 
     if (isBackground) {
-      print("paused");
       counter++;
     }
   }
 
-  navigateToDetail(BuildContext context, DocumentSnapshot studentpost,
+  navigateToExamWindow(BuildContext context, DocumentSnapshot studentpost,
       DocumentSnapshot exampost) {
     Navigator.push(
         context,
@@ -123,54 +123,104 @@ class _ExamState extends State<Exam> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Timer: " + t.toString()),
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("exams").snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Er is iets mis gegaan');
-          } else if (snapshot.hasData || snapshot.data != null) {
-            return ListView(
-                shrinkWrap: true,
-                children: snapshot.data!.docs.map((documentSnapshot) {
-                  return Card(
-                    elevation: 4,
-                    child: ListTile(
-                      title: Text(documentSnapshot["question"]),
-                      onTap: () => navigateToDetail(
-                          context, widget.post, documentSnapshot),
-                    ),
-                  );
-                }).toList());
-          }
+        appBar: AppBar(
+          title: Text("Timer: " + t.toString()),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 640,
+                      width: 1500,
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("exams")
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return const Text('Er is iets mis gegaan');
+                          } else if (snapshot.hasData ||
+                              snapshot.data != null) {
+                            return ListView(
+                                shrinkWrap: true,
+                                children:
+                                    snapshot.data!.docs.map((documentSnapshot) {
+                                  return Card(
+                                    elevation: 4,
+                                    child: ListTile(
+                                      title: Text(documentSnapshot["question"]),
+                                      onTap: () => navigateToExamWindow(context,
+                                          widget.post, documentSnapshot),
+                                    ),
+                                  );
+                                }).toList());
+                          }
 
-          return const Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.red,
-              ),
-            ),
-          );
-        },
-      ),
-      //button that finishes the exam
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          hasCheated(counter);
-          calculatePoints();
-          deleteStudent(widget.post['studentTitle']);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const StartScreen(),
-              ));
-        },
-        child: const Text('Finish'),
-      ),
-    );
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.red,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    //button that finishes the exam
+                    SizedBox(
+                        width: 300,
+                        height: 100,
+                        child: Card(
+                          elevation: 10,
+                          color: const Color.fromARGB(255, 178, 0, 13),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                          child: InkWell(
+                            onTap: () {
+                              hasCheated(counter);
+                              calculatePoints();
+                              deleteStudent(widget.post['studentTitle']);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const StartScreen(),
+                                  ));
+                            },
+                            splashColor: Colors.black,
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: const <Widget>[
+                                  Text("Beëindig examen",
+                                      style: TextStyle(
+                                        fontSize: 30.0,
+                                        color: Colors.white,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+                  ])),
+        ));
   }
 }
+/*
+onPressed: () {
+                          hasCheated(counter);
+                          calculatePoints();
+                          deleteStudent(widget.post['studentTitle']);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const StartScreen(),
+                              ));
+                        },*/

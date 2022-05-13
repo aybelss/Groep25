@@ -51,6 +51,7 @@ class _CodeCorrectionState extends State<CodeCorrection> {
         key: _keyForm,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -91,6 +92,7 @@ class _CodeCorrectionState extends State<CodeCorrection> {
                   width: 200,
                   height: 100,
                   child: Card(
+                    elevation: 10,
                     color: const Color.fromARGB(255, 178, 0, 13),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),

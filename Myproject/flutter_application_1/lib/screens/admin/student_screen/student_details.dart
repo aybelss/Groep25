@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/admin/student_screen/current_location.dart';
 
 import 'answer.dart';
+import 'location.dart';
 
 class StudentDetails extends StatefulWidget {
   final DocumentSnapshot post;
@@ -19,7 +19,7 @@ class _StudentDetailsState extends State<StudentDetails> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CurrentLocationScreen(
+          builder: (context) => LocationScreen(
             post: post,
           ),
         ));
@@ -101,7 +101,10 @@ class _StudentDetailsState extends State<StudentDetails> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Card(
-                  color: Colors.grey,
+                  elevation: 10,
+                  color: const Color.fromARGB(255, 178, 0, 13),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
                     onTap: () {
                       int val = int.parse(input);
@@ -122,10 +125,12 @@ class _StudentDetailsState extends State<StudentDetails> {
                           Icon(
                             Icons.edit,
                             size: 40.0,
+                            color: Colors.white,
                           ),
                           Text("        Wijzig        ",
                               style: TextStyle(
                                 fontSize: 30.0,
+                                color: Colors.white,
                               ))
                         ],
                       ),
@@ -134,7 +139,10 @@ class _StudentDetailsState extends State<StudentDetails> {
                 ),
                 const Padding(padding: EdgeInsets.all(50)),
                 Card(
-                  color: Colors.grey,
+                  elevation: 10,
+                  color: const Color.fromARGB(255, 178, 0, 13),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
                   child: InkWell(
                     onTap: () {
                       navigateToLocate(context, widget.post);
@@ -147,10 +155,12 @@ class _StudentDetailsState extends State<StudentDetails> {
                           Icon(
                             Icons.map,
                             size: 40.0,
+                            color: Colors.white,
                           ),
                           Text("      Location       ",
                               style: TextStyle(
                                 fontSize: 30.0,
+                                color: Colors.white,
                               ))
                         ],
                       ),
@@ -159,7 +169,11 @@ class _StudentDetailsState extends State<StudentDetails> {
                 ),
                 const Padding(padding: EdgeInsets.all(50)),
                 Card(
-                  color: Colors.grey,
+                  elevation: 10,
+                  color: const Color.fromARGB(255, 178, 0, 13),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                   child: InkWell(
                     onTap: () {
                       navigateToAnswer(context, widget.post);
@@ -172,10 +186,12 @@ class _StudentDetailsState extends State<StudentDetails> {
                           Icon(
                             Icons.message,
                             size: 40.0,
+                            color: Colors.white,
                           ),
                           Text("    Antwoorden    ",
                               style: TextStyle(
                                 fontSize: 30.0,
+                                color: Colors.white,
                               ))
                         ],
                       ),

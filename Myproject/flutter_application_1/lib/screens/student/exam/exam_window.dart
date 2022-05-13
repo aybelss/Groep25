@@ -28,6 +28,7 @@ class _ExamWindowState extends State<ExamWindow> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  // dit zorgt ervoor dat de app kan zien wanneer de student de app verlaat en telt het op
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
@@ -38,7 +39,6 @@ class _ExamWindowState extends State<ExamWindow> with WidgetsBindingObserver {
     final isBackground = state == AppLifecycleState.paused;
 
     if (isBackground) {
-      print("paused");
       counter++;
     }
   }
@@ -47,6 +47,7 @@ class _ExamWindowState extends State<ExamWindow> with WidgetsBindingObserver {
 
   final TextEditingController _textEditingController = TextEditingController();
 
+  //hier worden de openvragen opgehaald en opgeslagen in de database en later weergegeven in de antwoorden window
   Future<void> createOpenAnswer(String studentId, String question,
       String answer, String questionID) async {
     CollectionReference students = FirebaseFirestore.instance
@@ -62,40 +63,24 @@ class _ExamWindowState extends State<ExamWindow> with WidgetsBindingObserver {
     );
   }
 
+  //hier worden de multiplevragen en de codecorrectievragen opgehaald en opgeslagen in de database
   Future<void> createAnswer(
-      String studentId, String question, String answer, String type) async {
+      String studentId, String question, String answer) async {
     CollectionReference students =
         FirebaseFirestore.instance.collection('adminStudent');
 
-    if (type == "multiplechoice") {
-      if (answer == widget.postExam['correctAnswer']) {
-        return await students.doc(studentId).set({
-          'studentAnswers': {
-            question: {'answer': answer, 'score': 2}
-          }
-        }, SetOptions(merge: true));
-      } else if (answer != widget.postExam['correctAnswer']) {
-        return await students.doc(studentId).set({
-          'studentAnswers': {
-            question: {'answer': answer, 'score': 0}
-          }
-        }, SetOptions(merge: true));
-      }
-    }
-    if (type == "codecorrection") {
-      if (answer == widget.postExam['correctAnswer']) {
-        return await students.doc(studentId).set({
-          'studentAnswers': {
-            question: {'answer': answer, 'score': 2, 'question': question}
-          }
-        }, SetOptions(merge: true));
-      } else if (answer != widget.postExam['correctAnswer']) {
-        return await students.doc(studentId).set({
-          'studentAnswers': {
-            question: {'answer': answer, 'score': 0, 'question': question}
-          }
-        }, SetOptions(merge: true));
-      }
+    if (answer == widget.postExam['correctAnswer']) {
+      return await students.doc(studentId).set({
+        'studentAnswers': {
+          question: {'answer': answer, 'score': 2}
+        }
+      }, SetOptions(merge: true));
+    } else if (answer != widget.postExam['correctAnswer']) {
+      return await students.doc(studentId).set({
+        'studentAnswers': {
+          question: {'answer': answer, 'score': 0}
+        }
+      }, SetOptions(merge: true));
     }
   }
 
@@ -188,10 +173,10 @@ class _ExamWindowState extends State<ExamWindow> with WidgetsBindingObserver {
                             child: InkWell(
                               onTap: () {
                                 createAnswer(
-                                    widget.postStudent['studentTitle'],
-                                    widget.postExam['question'],
-                                    answer,
-                                    widget.postExam['type']);
+                                  widget.postStudent['studentTitle'],
+                                  widget.postExam['question'],
+                                  answer,
+                                );
                                 Navigator.of(context)
                                     .pop(_textEditingController.text);
                               },
@@ -325,10 +310,10 @@ class _ExamWindowState extends State<ExamWindow> with WidgetsBindingObserver {
                                     child: InkWell(
                                       onTap: () {
                                         createAnswer(
-                                            widget.postStudent['studentTitle'],
-                                            widget.postExam['question'],
-                                            answer,
-                                            widget.postExam['type']);
+                                          widget.postStudent['studentTitle'],
+                                          widget.postExam['question'],
+                                          answer,
+                                        );
                                         Navigator.of(context)
                                             .pop(_textEditingController.text);
                                       },

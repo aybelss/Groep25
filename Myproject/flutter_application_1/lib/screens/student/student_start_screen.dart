@@ -10,7 +10,7 @@ class StudentStart extends StatefulWidget {
 }
 
 class _StudentStartState extends State<StudentStart> {
-  navigateToDetail(BuildContext context, DocumentSnapshot post) {
+  navigateToExam(BuildContext context, DocumentSnapshot post) {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -39,7 +39,7 @@ class _StudentStartState extends State<StudentStart> {
                     elevation: 4,
                     child: ListTile(
                       title: Text(documentSnapshot["studentTitle"]),
-                      onTap: () => navigateToDetail(context, documentSnapshot),
+                      onTap: () => navigateToExam(context, documentSnapshot),
                     ),
                   );
                 }).toList());

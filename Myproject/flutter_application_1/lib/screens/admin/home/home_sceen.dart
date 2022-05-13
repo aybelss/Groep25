@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Card(
+              elevation: 10,
               color: const Color.fromARGB(255, 178, 0, 13),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
@@ -56,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 30,
             ),
             Card(
+              elevation: 10,
               color: const Color.fromARGB(255, 178, 0, 13),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
@@ -84,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 30,
             ),
             Card(
+              elevation: 10,
               color: const Color.fromARGB(255, 178, 0, 13),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),

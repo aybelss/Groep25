@@ -85,6 +85,8 @@ class _PassChangeState extends State<PassChange> {
                 ),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 178, 0, 13)),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     setState(() {

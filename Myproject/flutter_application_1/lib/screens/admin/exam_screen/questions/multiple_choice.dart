@@ -144,6 +144,7 @@ class _MultipleChoiceState extends State<MultipleChoice> {
                   width: 200,
                   height: 100,
                   child: Card(
+                    elevation: 10,
                     color: const Color.fromARGB(255, 178, 0, 13),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),

@@ -1,8 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, unused_field
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:location/location.dart';
 import 'exam.dart';
 
 class ExamStart extends StatefulWidget {
@@ -17,6 +17,7 @@ int counter = 0;
 
 class _ExamStartState extends State<ExamStart> {
   @override
+  //hier zetten we de questionId en counter van de timer weer op 0
   // ignore: must_call_super
   void initState() {
     if (questionID != 0) {
@@ -25,6 +26,51 @@ class _ExamStartState extends State<ExamStart> {
     if (counter != 0) {
       counter = 0;
     }
+  }
+
+  Location location = Location();
+  bool _serviceEnabled = false;
+  PermissionStatus _permissionGranted = PermissionStatus.denied;
+  late LocationData _locationData;
+  // ignore: prefer_final_fields
+  bool _isListening = false, _isGettingLocation = false;
+
+//methode om de locatie te ophalen
+  getLocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _locationData = await location.getLocation();
+
+    setState(() {
+      _isGettingLocation = true;
+    });
+
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection("adminStudent")
+        .doc(widget.post['studentTitle']);
+
+    Map<String, dynamic> studentList = {
+      "lat": _locationData.latitude,
+      "long": _locationData.longitude,
+    };
+    SetOptions(merge: true);
+
+    documentReference
+        .update(studentList)
+        // ignore: avoid_print
+        .whenComplete(() => print("Location succesvoll toegevoegd"));
   }
 
   @override
@@ -57,6 +103,7 @@ class _ExamStartState extends State<ExamStart> {
                             borderRadius: BorderRadius.circular(50)),
                         child: InkWell(
                           onTap: () {
+                            getLocation();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
