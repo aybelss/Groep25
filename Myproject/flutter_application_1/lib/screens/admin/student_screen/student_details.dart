@@ -43,7 +43,7 @@ class _StudentDetailsState extends State<StudentDetails> {
       return Text(
         'De student heeft ' +
             widget.post['hasCheated'].toString() +
-            ' gecheat.',
+            ' keer gespiekt.',
         style: const TextStyle(fontSize: 30),
       );
     }
