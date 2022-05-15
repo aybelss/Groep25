@@ -38,7 +38,7 @@ class _AddStudentState extends State<AddStudent> {
     documentReference
         .set(studentList)
         // ignore: avoid_print
-        .whenComplete(() => print("Student succesvol gemaakt"));
+        .whenComplete(() => print("adminStudent succesvol gemaakt"));
   }
 
   createStudent(String title) {
@@ -67,7 +67,7 @@ class _AddStudentState extends State<AddStudent> {
     documentReference
         .delete()
         // ignore: avoid_print
-        .whenComplete(() => print("Student succesvol verwijdert"));
+        .whenComplete(() => print("adminStudent succesvol verwijdert"));
 
     documentReference =
         FirebaseFirestore.instance.collection("students").doc(id);
@@ -116,7 +116,8 @@ class _AddStudentState extends State<AddStudent> {
                             return Card(
                               elevation: 4,
                               child: ListTile(
-                                title: Text(documentSnapshot["studentId"]),
+                                title: Text(documentSnapshot["studentId"],
+                                    style: const TextStyle(fontSize: 17)),
                                 onTap: () {
                                   navigateToDetail(context, documentSnapshot);
                                 },

@@ -38,13 +38,13 @@ class _StudentDetailsState extends State<StudentDetails> {
   hasCheated() {
     if (widget.post['hasCheated'] == "") {
       return const Text("De student heeft zijn examen nog niet gemaakt.",
-          style: TextStyle(fontSize: 30));
+          style: TextStyle(fontSize: 35));
     } else {
       return Text(
         'De student heeft ' +
             widget.post['hasCheated'].toString() +
             ' keer gespiekt.',
-        style: const TextStyle(fontSize: 30),
+        style: const TextStyle(fontSize: 35),
       );
     }
   }
@@ -59,13 +59,17 @@ class _StudentDetailsState extends State<StudentDetails> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+            SizedBox(
+              height: 100,
+              child: Text(
+                'Student: ' + widget.post['studentId'],
+                style:
+                    const TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  widget.post['studentId'] + ': ',
-                  style: const TextStyle(fontSize: 40),
-                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.05,
                   height: MediaQuery.of(context).size.width * 0.05,
@@ -81,13 +85,13 @@ class _StudentDetailsState extends State<StudentDetails> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: widget.post['score'].toString(),
-                      labelStyle: widget.post['score'] < 10
+                      labelStyle: widget.post['score'] < 5
                           ? const TextStyle(color: Colors.red)
                           : const TextStyle(color: Colors.green),
                     ),
                   ),
                 ),
-                const Text(' /20', style: TextStyle(fontSize: 40)),
+                const Text(' /10', style: TextStyle(fontSize: 40)),
               ],
             ),
             const SizedBox(
@@ -109,8 +113,8 @@ class _StudentDetailsState extends State<StudentDetails> {
                     onTap: () {
                       int val = int.parse(input);
 
-                      if (val > 20) {
-                        widget.post.reference.update({'score': 20});
+                      if (val > 10) {
+                        widget.post.reference.update({'score': 10});
                         Navigator.pop(context);
                       } else {
                         widget.post.reference.update({'score': val});
@@ -157,7 +161,7 @@ class _StudentDetailsState extends State<StudentDetails> {
                             size: 40.0,
                             color: Colors.white,
                           ),
-                          Text("      Location       ",
+                          Text("       Locatie       ",
                               style: TextStyle(
                                 fontSize: 30.0,
                                 color: Colors.white,

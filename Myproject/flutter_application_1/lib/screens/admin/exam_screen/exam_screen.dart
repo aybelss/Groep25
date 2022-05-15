@@ -16,7 +16,7 @@ class _ExamScreenState extends State<ExamScreen> {
       AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
     return snapshot.data!.docs.map<Widget>((document) {
       return ListTile(
-        title: Text(document["question"]),
+        title: Text(document["question"], style: const TextStyle(fontSize: 18)),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           color: const Color.fromARGB(255, 178, 0, 13),

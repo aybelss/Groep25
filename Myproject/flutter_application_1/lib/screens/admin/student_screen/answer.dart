@@ -26,7 +26,7 @@ class _AnswerWindowState extends State<AnswerWindow> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return const Text('Er zijn geen studenten');
+            return const Text('Loading...');
           } else if (snapshot.hasData || snapshot.data != null) {
             return SingleChildScrollView(
               child: ListView(
@@ -35,9 +35,12 @@ class _AnswerWindowState extends State<AnswerWindow> {
                     return Card(
                       elevation: 4,
                       child: ListTile(
-                          title: Text('Vraag: ' + documentSnapshot["question"]),
-                          subtitle:
-                              Text('Antwoord: ' + documentSnapshot["answer"])),
+                          title: Text(
+                            documentSnapshot["question"],
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          subtitle: Text(documentSnapshot["answer"],
+                              style: const TextStyle(fontSize: 17))),
                     );
                   }).toList()),
             );

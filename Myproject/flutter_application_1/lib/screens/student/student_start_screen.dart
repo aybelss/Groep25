@@ -30,7 +30,7 @@ class _StudentStartState extends State<StudentStart> {
         stream: FirebaseFirestore.instance.collection("students").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return const Text('Er zijn geen studenten');
+            return const Text('Loading...');
           } else if (snapshot.hasData || snapshot.data != null) {
             return ListView(
                 shrinkWrap: true,

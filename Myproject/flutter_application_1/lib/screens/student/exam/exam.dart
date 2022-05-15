@@ -18,13 +18,13 @@ class _ExamState extends State<Exam> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     countDown();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
   //hahha
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
